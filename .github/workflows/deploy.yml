@@ -43,6 +43,12 @@ jobs:
           sudo apt-get update && sudo apt-get install -y google-cloud-cli-gke-gcloud-auth-plugin
           echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
 
+      - name: Update deployment file with version
+        run: |
+          sed -i "s|s4lvious/carrot-frontend:latest|s4lvious/carrot-frontend:${VERSION}|g" frontend-deployment.yaml
+          cat frontend-deployment.yaml  # Per verificare la sostituzione
+
+
       - name: Deploy to GKE
         run: |
           kubectl apply -f frontend-deployment.yaml
