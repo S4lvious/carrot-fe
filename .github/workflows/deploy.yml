@@ -13,6 +13,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Get version from package.json
+        id: get_version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Version is: $VERSION"
+
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
         with:
@@ -24,9 +31,9 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t s4lvious/carrot-frontend:latest .
+          docker build -t s4lvious/carrot-frontend:${VERSION} .
           echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
-          docker push s4lvious/carrot-frontend:latest
+          docker push s4lvious/carrot-frontend:${VERSION}
 
       - name: Install GKE auth plugin
         run: |
