@@ -6,6 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../../../services/auth.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import { environment } from '../../../../environment/environment';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
   submitted = false;
+  version = environment.version;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
