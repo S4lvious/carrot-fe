@@ -59,7 +59,6 @@ export class OrdiniAddDialogComponent extends ComponentDialog implements OnInit 
   // Azioni del footer
   footerActions: DialogFooterActions = {
     primary: {
-      disabled: true,
       label: 'Salva',
       command: () => {
         const ordine: any = {
@@ -84,7 +83,6 @@ export class OrdiniAddDialogComponent extends ComponentDialog implements OnInit 
       }
     },
     secondary: {
-      disabled: true,
       label: 'Annulla',
       command: () => this.close()
     }
