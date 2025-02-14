@@ -30,14 +30,14 @@ import { ComponentDialog } from '../../models/component-dialog';
           severity="secondary"
           variant="outlined"
           (click)="footerActions.secondary.command()"
-          [disabled]="!!footerActions.secondary.disabled"
+          [disabled]="getDisabled(footerActions.secondary.disabled)"
           >
         </p-button>
         <p-button
         *ngIf="footerActions.primary"
           [label]="footerActions.primary.label"
           (click)="footerActions.primary.command()"
-          [disabled]="!!footerActions.primary.disabled"
+          [disabled]="getDisabled(footerActions.primary.disabled)"
           >
         </p-button>
       </div>
@@ -53,6 +53,12 @@ export class BmDialogComponent extends ComponentDialog {
   @Input() closable = true;
   @Input() size: DialogSize = 'small';
 
+  getDisabled(disabledProp: boolean | (() => boolean) | undefined): boolean {
+    // Se disabledProp è una funzione, la invoca e restituisce il risultato,
+    // altrimenti restituisce il valore (o false se undefined)
+    return typeof disabledProp === 'function' ? disabledProp() : (disabledProp ?? false);
+  }
+    
   public get dialogStyleClass() {
     let classes = 'carrot-simple-dialog carrot-dialog-'+this.size;
     return classes;

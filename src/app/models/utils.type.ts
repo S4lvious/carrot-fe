@@ -25,7 +25,7 @@ export type DialogFooterActionType = 'primary' | 'secondary' | 'ghost' | 'danger
 export type DialogFooterActions = {
     [k in DialogFooterActionType]?: {
         label: string,
-        disabled?: boolean,
+        disabled?: boolean | (() => boolean);
         /** aggiunge un tooltip top sul pulsante, può essere usato anche quando è disabilitato */
         tooltip?: string,
         command: () => void

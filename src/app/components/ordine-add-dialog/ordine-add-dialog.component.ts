@@ -56,38 +56,52 @@ export class OrdiniAddDialogComponent extends ComponentDialog implements OnInit 
   // Flag per mostrare/nascondere la dialog
   display: boolean = true;
 
-  // Azioni del footer
-  footerActions: DialogFooterActions = {
-    primary: {
-      label: 'Salva',
-      command: () => {
-        const ordine: any = {
-          cliente: this.selectedCliente,
-          dataOrdine: this.dataOrdine,
-          totale: this.calculateTotale(),
-          fatturato: this.fatturato,
-          stato: this.stato,
-          dettagliOrdine: this.orderDetails.map(d => ({
-            prodotto: d.prodotto,
-            quantita: d.quantita,
-            prezzoUnitario: d.prezzoUnitario
-          }))
-        };
-
-        if (this.edit) {
-          ordine.id = this.data.id;
-          this.ordiniService.updateOrdine(ordine).subscribe(() => this.close());
-        } else {
-          this.ordiniService.createOrdine(ordine).subscribe(() => this.close());
-        }
-      }
-    },
-    secondary: {
-      label: 'Annulla',
-      command: () => this.close()
+  public get calculateDisabled () {
+    if (!this.selectedCliente) {
+      return true;
+    } else if (this.orderDetails.length == 0) {
+      return true;
     }
-  };
+    else {
+      return false;
+    }
+  }
 
+
+  public get footerActions(): DialogFooterActions {
+    return {
+      primary: {
+        disabled: this.calculateDisabled,
+        label: 'Salva',
+        command: () => {
+          const ordine: any = {
+            cliente: this.selectedCliente,
+            dataOrdine: this.dataOrdine,
+            totale: this.calculateTotale(),
+            fatturato: this.fatturato,
+            stato: this.stato,
+            dettagliOrdine: this.orderDetails.map(d => ({
+              prodotto: d.prodotto,
+              quantita: d.quantita,
+              prezzoUnitario: d.prezzoUnitario
+            }))
+          };
+  
+          if (this.edit) {
+            ordine.id = this.data.id;
+            this.ordiniService.updateOrdine(ordine).subscribe(() => this.close());
+          } else {
+            this.ordiniService.createOrdine(ordine).subscribe(() => this.close());
+          }
+        }
+      },
+      secondary: {
+        label: 'Annulla',
+        command: () => this.close()
+      }
+  
+    }
+  } 
   constructor(private ordiniService: OrdiniService, private productService: ProdottiService, private clienteService: ClientiService) {
     super();
   }

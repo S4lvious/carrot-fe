@@ -32,46 +32,54 @@ export class ProdottiAddDialogComponent extends ComponentDialog {
   quantita: number;
   esauribile: boolean;
   selectedCategoria: Categoria;
-  footerActions: DialogFooterActions = {
-    primary: {
-      label: 'Salva',
-      command: () => {
-        if (this.edit) {
-          this.prodottiService.updateProduct({
-            id: this.data.id,
-            nome: this.nome,
-            descrizione: this.descrizione,
-            prezzo: this.prezzo,
-            categoria: this.selectedCategoria,
-            aliquotaIVA: this.aliquotaIVA,
-            quantita: this.quantita,
-            esauribile: this.esauribile
-          }).subscribe(() => {
-            this.close();
-          });
-        } else {
-          this.prodottiService.createProduct({
-            nome: this.nome,
-            descrizione: this.descrizione,
-            prezzo: this.prezzo,
-            categoria: this.selectedCategoria,
-            aliquotaIVA: this.aliquotaIVA,
-            quantita: this.quantita,
-            esauribile: this.esauribile
-          }).subscribe(() => {
-            this.close();
-          });
+  get calculateDisabled() {
+    return (!this.nome || !this.selectedCategoria);
+  }
+
+
+  get footerActions(): DialogFooterActions {
+    return  {
+      primary: {
+        disabled: this.calculateDisabled,
+        label: 'Salva',
+        command: () => {
+          if (this.edit) {
+            this.prodottiService.updateProduct({
+              id: this.data.id,
+              nome: this.nome,
+              descrizione: this.descrizione,
+              prezzo: this.prezzo,
+              categoria: this.selectedCategoria,
+              aliquotaIVA: this.aliquotaIVA,
+              quantita: this.quantita,
+              esauribile: this.esauribile
+            }).subscribe(() => {
+              this.close();
+            });
+          } else {
+            this.prodottiService.createProduct({
+              nome: this.nome,
+              descrizione: this.descrizione,
+              prezzo: this.prezzo,
+              categoria: this.selectedCategoria,
+              aliquotaIVA: this.aliquotaIVA,
+              quantita: this.quantita,
+              esauribile: this.esauribile
+            }).subscribe(() => {
+              this.close();
+            });
+          }
+        }
+      },
+      secondary: {
+        label: 'Annulla',
+        command: () => {
+          this.close();
         }
       }
-    },
-    secondary: {
-      label: 'Annulla',
-      command: () => {
-        this.close();
-      }
-    }
-  };
-
+    };
+  
+  }
   constructor(private prodottiService: ProdottiService) {
     super();
   }

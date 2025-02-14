@@ -39,28 +39,36 @@ export class FatturaAddDialog extends ComponentDialog {
   stato: string = "Non pagata";
   orderDetails: any[];
 
-  footerActions: DialogFooterActions = {
-    primary: {
-      label: 'Salva',
-      command: () => {
-          this.ordineService.generaFatturaDaOrdine({
-            ordine: this.ordine,
-            applicareRitenuta: this.applicareRitenuta,
-            ritenutaAcconto: this.ritenutaAcconto,
-            scadenza: this.scadenza,
-            stato: this.stato
-        }).subscribe(() => {
-            this.close();
-          });
+  get footerActions(): DialogFooterActions  {
+    return {
+      primary: {
+        disabled: this.disabled,
+        label: 'Salva',
+        command: () => {
+            this.ordineService.generaFatturaDaOrdine({
+              ordine: this.ordine,
+              applicareRitenuta: this.applicareRitenuta,
+              ritenutaAcconto: this.ritenutaAcconto,
+              scadenza: this.scadenza,
+              stato: this.stato
+          }).subscribe(() => {
+              this.close();
+            });
+          }
+          },
+      secondary: {
+        label: 'Annulla',
+        command: () => {
+          this.close();
         }
-        },
-    secondary: {
-      label: 'Annulla',
-      command: () => {
-        this.close();
       }
+  
     }
   };
+
+  public get disabled () {
+    return !this.ordine
+  }
 
   selectionChange() {
     this.orderDetails = [];

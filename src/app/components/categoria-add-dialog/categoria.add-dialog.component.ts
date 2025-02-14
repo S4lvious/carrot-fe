@@ -25,31 +25,35 @@ export class CategorieAddDialogComponent extends ComponentDialog {
   @Input() data: Prodotto;
   edit: boolean;
   nome: string;
-  footerActions: DialogFooterActions = {
-    primary: {
-      label: 'Salva',
-      command: () => {
-        if (this.edit) {
-          this.prodottiService.updateCategoria({
-            id: this.data.id,
-            nome: this.nome,
-          }).subscribe(() => {
-            this.close();
-          });
-        } else {
-          this.prodottiService.createCategoria({
-            nome: this.nome,
-          }).subscribe(() => {
-            this.close();
-          });
+  get footerActions(): DialogFooterActions  {
+    return {
+      primary: {
+        disabled: !this.nome,
+        label: 'Salva',
+        command: () => {
+          if (this.edit) {
+            this.prodottiService.updateCategoria({
+              id: this.data.id,
+              nome: this.nome,
+            }).subscribe(() => {
+              this.close();
+            });
+          } else {
+            this.prodottiService.createCategoria({
+              nome: this.nome,
+            }).subscribe(() => {
+              this.close();
+            });
+          }
+        }
+      },
+      secondary: {
+        label: 'Annulla',
+        command: () => {
+          this.close();
         }
       }
-    },
-    secondary: {
-      label: 'Annulla',
-      command: () => {
-        this.close();
-      }
+  
     }
   };
 

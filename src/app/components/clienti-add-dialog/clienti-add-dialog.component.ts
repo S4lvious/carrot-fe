@@ -33,56 +33,71 @@ export class ClientiAddDialogComponent extends ComponentDialog {
     ragioneSociale: string;
 
 
+    get isSaveDisabled(): boolean {
+        // Se è presente la ragione sociale, allora è valido solo se non ci sono né nome né cognome.
+        if (this.ragioneSociale) {
+          return Boolean(this.nome || this.cognome); // Se c'è almeno un valore, disabilita.
+        } else {
+          // Se non è presente la ragione sociale, allora richiediamo che entrambi nome e cognome siano valorizzati.
+          return (!this.nome || !this.cognome);
+        }
+      }
+            
 
-    footerActions: DialogFooterActions = {
-        primary: {
-            label: 'Salva',
-            command: () => { 
-                if (this.edit) {
-                    this.clienteService.updateClient({ 
-                                            id: this.data.id,
-                                            nome: this.nome,
-                                            cognome: this.cognome,
-                                            email: this.email,
-                                            telefono: this.telefono,
-                                            indirizzo: this.indirizzo,
-                                            cap: this.cap,
-                                            provincia: this.provincia,
-                                            citta: this.citta,
-                                            partitaIva: this.partitaIva === '' ? null : this.partitaIva,
-                                            codiceFiscale: this.codiceFiscale,
-                                            ragioneSociale: this.ragioneSociale,
-                                            isAzienda: this.data.isAzienda
-                                        }).subscribe(() => {
-                                            this.close()
-                                        })
-                } else {
-                    this.clienteService.createClient(
-                        {
-                            nome: this.nome,
-                            cognome: this.cognome,
-                            email: this.email,
-                            telefono: this.telefono,
-                            indirizzo: this.indirizzo,
-                            cap: this.cap,
-                            provincia: this.provincia,
-                            citta: this.citta,
-                            partitaIva: this.partitaIva === '' ? null : this.partitaIva,
-                            codiceFiscale: this.codiceFiscale,
-                            ragioneSociale: this.ragioneSociale,
-                            isAzienda: this.ragioneSociale ? true : false
-                        }
-                    ).subscribe(() => {
-                        this.close()
-                    })
+
+    get footerActions(): DialogFooterActions {
+        return {
+            primary: {
+                disabled: this.isSaveDisabled,
+                label: 'Salva',
+                command: () => { 
+                    if (this.edit) {
+                        this.clienteService.updateClient({ 
+                                                id: this.data.id,
+                                                nome: this.nome,
+                                                cognome: this.cognome,
+                                                email: this.email,
+                                                telefono: this.telefono,
+                                                indirizzo: this.indirizzo,
+                                                cap: this.cap,
+                                                provincia: this.provincia,
+                                                citta: this.citta,
+                                                partitaIva: this.partitaIva === '' ? null : this.partitaIva,
+                                                codiceFiscale: this.codiceFiscale,
+                                                ragioneSociale: this.ragioneSociale,
+                                                isAzienda: this.data.isAzienda
+                                            }).subscribe(() => {
+                                                this.close()
+                                            })
+                    } else {
+                        this.clienteService.createClient(
+                            {
+                                nome: this.nome,
+                                cognome: this.cognome,
+                                email: this.email,
+                                telefono: this.telefono,
+                                indirizzo: this.indirizzo,
+                                cap: this.cap,
+                                provincia: this.provincia,
+                                citta: this.citta,
+                                partitaIva: this.partitaIva === '' ? null : this.partitaIva,
+                                codiceFiscale: this.codiceFiscale,
+                                ragioneSociale: this.ragioneSociale,
+                                isAzienda: this.ragioneSociale ? true : false
+                            }
+                        ).subscribe(() => {
+                            this.close()
+                        })
+                    }
+                 }
+            },
+            secondary: {
+                label: 'Annulla',
+                command: () => {
+                    this.close();
                 }
-             }
-        },
-        secondary: {
-            label: 'Annulla',
-            command: () => {
-                this.close();
             }
+    
         }
     }
 

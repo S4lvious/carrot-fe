@@ -84,8 +84,16 @@
               </ng-template>
               <ng-template pTemplate="body" let-cliente>
                 <tr>
-                  <td *ngIf="!cliente.isAzienda">{{ cliente.ragioneSociale }}</td>
-                  <td *ngIf="cliente.isAzienda">{{ cliente.nome + " " + cliente.cognome }}</td>
+                  <ng-container *ngIf="cliente.azienda === true; else defaultValue">
+                    <td>
+                      {{cliente.ragioneSociale}}
+                    </td>
+                  </ng-container>
+                  <ng-template #defaultValue>
+                    <td>
+                      {{cliente.nome}} {{cliente.cognome}}
+                    </td>
+                  </ng-template>
                   <td>{{ cliente.email }}</td>
                   <td>{{ cliente.telefono }}</td>
                   <td>{{ cliente.indirizzo }}</td>
@@ -104,10 +112,10 @@
             <p-table [value]="dashBoardData.ultimiOrdini ?? []" [paginator]="true" [rows]="5">
               <ng-template pTemplate="header">
                 <tr>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Telefono</th>
-                  <th>Indirizzo</th>
+                  <th>ID</th>
+                  <th>Nome cliente</th>
+                  <th>Totale NO IVA</th>
+                  <th>Fatturato</th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-ordine>
@@ -115,7 +123,28 @@
                   <td>{{ ordine.id }}</td>
                   <td>{{ ordine.cliente.nome }}</td>
                   <td>{{ ordine.totale }}</td>
-                  <td>{{ ordine.fatturato }}</td>
+                  <ng-container *ngIf="ordine.fatturato === true; else defaultValue">
+                    <td>
+                      <p-button 
+                      [rounded]="true"
+                      [text]="true"
+                      severity="secondary"
+                      size="small"
+                      [icon]="'pi pi-check'">
+                    </p-button>        
+                    </td>
+                  </ng-container>
+                  <ng-template #defaultValue>
+                    <td>
+                      <p-button 
+                      [rounded]="true"
+                      [text]="true"
+                      severity="secondary"
+                      size="small"
+                      [icon]="'pi pi-times'">
+                    </p-button>        
+                    </td>
+                  </ng-template>
                 </tr>
               </ng-template>
             </p-table>
@@ -129,10 +158,10 @@
             <p-table [value]="dashBoardData.ultimiProdotti ?? []" [paginator]="true" [rows]="5">
               <ng-template pTemplate="header">
                 <tr>
+                  <th>ID</th>
                   <th>Nome</th>
-                  <th>Email</th>
-                  <th>Telefono</th>
-                  <th>Indirizzo</th>
+                  <th>Prezzo</th>
+                  <th>IVA</th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-prodotto>
