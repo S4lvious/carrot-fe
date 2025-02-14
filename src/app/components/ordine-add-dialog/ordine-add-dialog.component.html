@@ -2,61 +2,66 @@
   [size]="'large'"
   [title]="edit ? 'Modifica Ordine' : 'Nuovo Ordine'"
   [footerActions]="footerActions"
+  class="order-dialog"
 >
-  <!-- Dati principali dell'ordine -->
-  <div class="row">
-    <div class="col-4 p-3">
-      <p-float-label>
-        <p-select
-        placeholder="Seleziona un cliente"
-        [(ngModel)]="selectedCliente"
-        [options]="clientiList"
-        id="cliente"
-      >
-        <!-- Template per la visualizzazione di ciascuna opzione -->
-        <ng-template let-option pTemplate="item">
-          {{ (option.nome && option.nome.trim().length > 0) ? option.nome : option.ragioneSociale }}
-        </ng-template>
-      
-        <!-- Template per la visualizzazione dell'elemento selezionato -->
-        <ng-template let-option pTemplate="selectedItem">
-          {{ (option.nome && option.nome.trim().length > 0) ? option.nome : option.ragioneSociale }}
-        </ng-template>
-      </p-select>
-              <label for="cliente">Seleziona un cliente</label>
-      </p-float-label>
-    </div>
-    <div class="col-4 p-3">
-      <p-float-label>
-        <p-datePicker
-          type="datetime-local"
-          [disabled]="true"
-          [(ngModel)]="dataOrdine"
-        >
-        </p-datePicker>
-        <label>Data ordine</label>
-      </p-float-label>
-    </div>
-    <div class="col-4 p-3">
-      <p-float-label>
-        <p-select
-          placeholder="Seleziona stato"
-          [(ngModel)]="stato"
-          [options]="['In corso', 'Completo']"
-          id="cliente"
-        >
-        </p-select>
-        <label for="cliente">Seleziona stato ordine</label>
-      </p-float-label>
-    </div>
+  <!-- Introduzione -->
+  <div class="p-3">
+    <p class="text-secondary">
+      Inserisci i dettagli dell'ordine e i prodotti che desideri aggiungere.
+    </p>
   </div>
-  <div class="row">
-    <div class="col p-3">
-      <h3>Dettagli Ordine</h3>
-    </div>
+
+  <!-- Pannello Dati Principali -->
+  <p-panel header="Dati Principali" [style]="{'marginBottom': '10px'}">
     <div class="row">
-      <div class="col">
-        <p-table [value]="orderDetails">
+      <div class="col-4 p-3">
+          <p-select
+            placeholder="Seleziona un cliente"
+            [(ngModel)]="selectedCliente"
+            [options]="clientiList"
+            id="cliente"
+          >
+            <!-- Template per la visualizzazione di ciascuna opzione -->
+            <ng-template let-option pTemplate="item">
+              {{ (option.nome && option.nome.trim().length > 0) ? option.nome : option.ragioneSociale }}
+            </ng-template>
+            <!-- Template per la visualizzazione dell'elemento selezionato -->
+            <ng-template let-option pTemplate="selectedItem">
+              {{ (option.nome && option.nome.trim().length > 0) ? option.nome : option.ragioneSociale }}
+            </ng-template>
+          </p-select>
+      </div>
+      <div class="col-4 p-3">
+        <p-float-label>
+          <p-datePicker
+            type="datetime-local"
+            [disabled]="true"
+            [(ngModel)]="dataOrdine"
+          >
+          </p-datePicker>
+          <label>Data ordine</label>
+        </p-float-label>
+      </div>
+      <div class="col-4 p-3">
+        <p-float-label>
+          <p-select
+            placeholder="Seleziona stato"
+            [(ngModel)]="stato"
+            [options]="['In corso', 'Completo']"
+            id="stato"
+          >
+          </p-select>
+          <label for="stato">Seleziona stato ordine</label>
+        </p-float-label>
+      </div>
+    </div>
+  </p-panel>
+
+  <!-- Pannello Dettagli Ordine -->
+  <p-panel header="Dettagli Ordine" [style]="{'marginBottom': '10px'}">
+    <div class="row">
+      <div class="col-12">
+        <p-table [value]="orderDetails" class="p-datatable-striped p-datatable-gridlines">
           <ng-template pTemplate="header">
             <tr>
               <th>Prodotto</th>
@@ -72,13 +77,14 @@
               <td>{{ detail.prodotto.nome }}</td>
               <td>{{ detail.quantita }}</td>
               <td>{{ detail.prezzoUnitario }}</td>
-              <td>{{detail.prodotto.aliquotaIVA}}</td>
+              <td>{{ detail.prodotto.aliquotaIVA }}</td>
               <td>{{ detail.prezzoUnitario * detail.quantita }}</td>
               <td>
                 <p-button
-                  label="Rimuovi"
                   icon="pi pi-trash"
+                  class="p-button-rounded p-button-danger p-button-text"
                   (click)="removeDettaglio(i)"
+                  tooltip="Rimuovi Prodotto"
                 >
                 </p-button>
               </td>
@@ -88,8 +94,8 @@
       </div>
     </div>
 
-    <div class="row align-items-center">
-      <div class="col-4 p-3">
+    <div class="row align-items-center mt-3 p-3" style="background-color: #f9f9f9; border-radius: 6px;">
+      <div class="col-4">
         <p-select
           label="Prodotto"
           placeholder="Seleziona un prodotto"
@@ -99,7 +105,7 @@
         >
         </p-select>
       </div>
-      <div class="col-4 p-3">
+      <div class="col-4">
         <ct-input
           type="number"
           placeholder="Inserisci Quantità"
@@ -107,13 +113,14 @@
         >
         </ct-input>
       </div>
-      <div class="col-4 p-3">
+      <div class="col-4">
         <p-button
           label="Aggiungi Prodotto"
           icon="pi pi-plus"
+          class="p-button-success p-button-rounded"
           (click)="addDettaglio()"
         ></p-button>
       </div>
     </div>
-  </div>
+  </p-panel>
 </ct-dialog>

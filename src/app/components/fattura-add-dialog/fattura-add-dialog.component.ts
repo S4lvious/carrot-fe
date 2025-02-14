@@ -18,11 +18,14 @@ import { IftaLabelModule } from 'primeng/iftalabel';
 import { DatePicker } from 'primeng/datepicker';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { PanelModule } from 'primeng/panel';
+import { CtCheckboxComponent } from "../checkbox/ct-checkbox.component";
+
 
 @Component({
   selector: 'app-prodotti-add-dialog',
   standalone: true,
-  imports: [BmDialogComponent, TableModule,ButtonModule,InputTextModule, CtInputComponent, FormsModule, ToggleButtonModule, Checkbox, IftaLabelModule, DatePicker, Select],
+  imports: [BmDialogComponent, PanelModule, TableModule, ButtonModule, InputTextModule, CtInputComponent, FormsModule, ToggleButtonModule, IftaLabelModule, DatePicker, Select, CtCheckboxComponent],
   templateUrl: 'fattura-add-dialog.component.html',
   styles: []
 })

@@ -6,12 +6,13 @@ import { DialogFooterActions } from '../../models/utils.type';
 import { Cliente } from '../../models/cliente.model';
 import { ClientiService } from '../../services/clienti.service';
 import { ComponentDialog } from '../../models/component-dialog';
+import { PanelModule } from 'primeng/panel';
 
 
 @Component({
     selector: 'app-clienti-add-dialog',
     standalone: true,
-    imports: [BmDialogComponent, InputTextModule, CtInputComponent],
+    imports: [BmDialogComponent, PanelModule,InputTextModule, CtInputComponent],
     templateUrl: 'clienti-add-dialog.component.html',
     styles: []
 })

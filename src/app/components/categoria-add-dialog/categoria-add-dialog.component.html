@@ -1,8 +1,9 @@
-<ct-dialog [size]="'medium'" [title]="edit ? 'Modifica categoria' : 'Inserisci categoria'" [footerActions]="footerActions">
+<ct-dialog [size]="'medium'" [title]="edit ? 'Modifica categoria' : 'Inserisci categoria'" [footerActions]="footerActions" class="category-dialog">
+  <p-panel header="Dettagli Categoria" class="mb-3"  [style]="{'marginBottom': '10px'}">
     <div class="row">
-      <div class="col p-3">
+      <div class="col-12 p-3">
         <ct-input [label]="'Nome'" [(ctModel)]="nome"></ct-input>
       </div>
     </div>
-  </ct-dialog>
-  
+  </p-panel>
+</ct-dialog>

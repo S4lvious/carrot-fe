@@ -11,11 +11,12 @@ import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CategorieService } from '../../services/categoria.service';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
   selector: 'app-prodotti-add-dialog',
   standalone: true,
-  imports: [BmDialogComponent, InputTextModule, CtInputComponent, FormsModule, ToggleButtonModule],
+  imports: [BmDialogComponent, InputTextModule, CtInputComponent, FormsModule, ToggleButtonModule, PanelModule],
   templateUrl: 'categoria-add-dialog.component.html',
   styles: []
 })

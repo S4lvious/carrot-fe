@@ -1,0 +1,116 @@
+.inputswitch-container {
+    display: flex;
+    align-items: center;
+  
+    > .label {
+      flex-grow: 1;
+  
+      &.disabled {
+        color: #999; // colore statico per 'grey-30'
+      }
+    }
+  
+    &.background {
+      padding: 12px;
+      background-color: #f7f7f7; // colore statico per 'grey-5'
+      border-radius: 8px;
+  
+      &.margin {        
+        margin-top: 20px;
+      }
+    }
+  
+    &.margin {        
+      margin-top: 32px;
+    }
+  }
+  
+  p-inputswitch {
+    height: 28px;
+    
+    ::ng-deep .p-inputswitch {
+      height: 28px;
+      width: 52px !important; // TODO: verificare se è possibile rimuovere !important
+      
+      .p-inputswitch-slider {
+        background-color: #666; // colore statico per 'grey-40'
+        border-radius: 20px;
+  
+        &::before {
+          height: 24px;
+          width: 24px;
+          top: calc(50% - 12px) !important; // TODO: verificare se è possibile rimuovere !important
+          left: 2px;
+          box-shadow: none;
+          margin-top: 0;
+        }
+  
+        &:hover {
+          background-color: #666; // colore statico per 'grey-40'
+          
+          &::before {
+            box-shadow: none;
+          }
+        }
+      }
+  
+      &.p-inputswitch-checked {
+        .p-inputswitch-slider {
+          background-color: #007ad9; // colore statico per 'accent'
+          border-radius: 20px;
+          
+          &::before {
+            background-color: #fff; // colore statico per 'white'
+            transform: translateX(24px);
+          }
+  
+          &:hover {
+            background-color: #007ad9; // colore statico per 'accent'
+          }
+        }
+  
+        &.p-disabled {
+          opacity: 1;
+          
+          .p-inputswitch-slider {
+            background-color: #66b3ff; // colore statico per 'accent-lighten-20'
+          }
+        }
+      }
+  
+      &.p-disabled {
+        opacity: 1;
+        
+        .p-inputswitch-slider {
+          background-color: #e0e0e0; // colore statico per 'grey-20'
+        }
+      }
+    }
+    
+    &.switch-small {
+      height: 19px;
+      
+      ::ng-deep .p-inputswitch {
+        height: 16px;
+        width: 32px !important; // TODO: verificare se è possibile rimuovere !important
+        
+        .p-inputswitch-slider {
+          &::before {
+            height: 12px;
+            width: 12px;
+            top: calc(50% - 6px) !important; // TODO: verificare se è possibile rimuovere !important
+          }
+        }
+        
+        &.p-inputswitch-checked {
+          .p-inputswitch-slider {
+            &::before {
+              background-color: #fff; // colore statico per 'white'
+              transform: translateX(16px);
+            }
+          }
+        }
+      }
+    }
+  }
+  

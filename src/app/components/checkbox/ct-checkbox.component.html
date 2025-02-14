@@ -1,0 +1,18 @@
+<div class="inputswitch-container" [ngClass]="{'background': background, 'margin': margin}">
+  <span *ngIf="label || settedName"
+        [ngClass]="{'label': true, 'disabled': disabled, 'bold': bold}">
+    {{ label || settedName }}
+  </span>
+
+  <p-inputSwitch [ngClass]="size === 'small' ? 'switch-small' : ''"
+                 [disabled]="disabled"
+                 (click)="onClick($event)"
+                 [(ngModel)]="bmModel"
+                 (ngModelChange)="bmModelChange.emit(bmModel)">
+  </p-inputSwitch>
+</div>
+
+<small *ngIf="helperText">{{ helperText }}</small>
+
+<!-- Input hidden per eventuale submit del form -->
+<input type="hidden" [ngModel]="bmModel ? '1' : ''" [name]="name"/>

@@ -10,11 +10,13 @@ import { Categoria } from '../../models/categoria.model';
 import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { CtCheckboxComponent } from "../checkbox/ct-checkbox.component";
+import { PanelModule } from 'primeng/panel';
 
 @Component({
   selector: 'app-prodotti-add-dialog',
   standalone: true,
-  imports: [BmDialogComponent, InputTextModule, CtInputComponent, FormsModule, Select, ToggleButtonModule],
+  imports: [BmDialogComponent, PanelModule,InputTextModule, CtInputComponent, FormsModule, Select, ToggleButtonModule, CtCheckboxComponent],
   templateUrl: 'prodotti-add-dialog.component.html',
   styles: []
 })

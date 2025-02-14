@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 import { ClientiService } from '../../services/clienti.service';
 import { TableModule } from 'primeng/table';
 import { FloatLabelModule } from 'primeng/floatlabel';
-
+import { PanelModule } from 'primeng/panel';
 interface DettaglioOrdineInput {
   id?: number;
   prodotto: Prodotto;
@@ -29,7 +29,7 @@ interface DettaglioOrdineInput {
   selector: 'app-ordini-add-dialog',
   templateUrl: './ordine-add-dialog.component.html',
   standalone: true,
-  imports: [BmDialogComponent, CtInputComponent, Select, DatePicker, FormsModule, ButtonModule, CommonModule, TableModule, FloatLabelModule]
+  imports: [BmDialogComponent, PanelModule,CtInputComponent, Select, DatePicker, FormsModule, ButtonModule, CommonModule, TableModule, FloatLabelModule]
 })
 export class OrdiniAddDialogComponent extends ComponentDialog implements OnInit {
 
