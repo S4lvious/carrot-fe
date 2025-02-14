@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: s4lvious/carrot-frontend:v6  # Sostituisci con il tuo Docker Hub
+        image: s4lvious/carrot-frontend:latest  # Sostituisci con il tuo Docker Hub
         imagePullPolicy: Always  # Assicura che Kubernetes scarichi sempre la nuova immagine
         ports:
         - containerPort: 80
