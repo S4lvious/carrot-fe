@@ -1,7 +1,7 @@
 <div class="container-md">
     <div class="row mt-4">
         <div class="col-3">
-            <p-card>
+            <p-card *ngIf="dashBoardData">
                 <ng-template pTemplate="title">Clienti attivi</ng-template>
                 <ng-template pTemplate="content">
                   <h3>{{ dashBoardData.clientiAttivi ?? 0 }}</h3>
@@ -9,7 +9,7 @@
             </p-card>
         </div>
         <div class="col-3">
-            <p-card>
+            <p-card *ngIf="dashBoardData">
                 <ng-template pTemplate="title">Fatturato mensile</ng-template>
                 <ng-template pTemplate="content">
                   <h3>{{ dashBoardData.fatturatoMese ?? 0 }}</h3>
@@ -17,7 +17,7 @@
             </p-card>
         </div>
         <div class="col-3">
-            <p-card>
+            <p-card *ngIf="dashBoardData">
                 <ng-template pTemplate="title">Fatturato Totale</ng-template>
                 <ng-template pTemplate="content">
                   <h3>{{ dashBoardData.fatturatoTotale ?? 0 }}</h3>
@@ -25,7 +25,7 @@
             </p-card>
         </div>
         <div class="col-3">
-            <p-card>
+            <p-card *ngIf="dashBoardData">
                 <ng-template pTemplate="title">Totale Ordini</ng-template>
                 <ng-template pTemplate="content">
                   <h3>{{ dashBoardData.totaleOrdini ?? 0 }}</h3>
@@ -35,7 +35,7 @@
      </div>
      <div class="row mt-4">
         <div class="col-12">
-            <p-card>
+            <p-card *ngIf="dashBoardData">
                 <ng-template pTemplate="title">Andamento del Fatturato</ng-template>
                 <ng-template pTemplate="content">
                   <p-chart type="bar" [data]="dashBoardData.andamentoFatturato  ?? []"></p-chart>
@@ -45,7 +45,7 @@
     </div>
     <div class="row mt-4">
         <div class="col-6">
-            <p-card>
+            <p-card *ngIf="dashBoardData">
                 <ng-template pTemplate="title">Ultime fatture</ng-template>
                 <ng-template pTemplate="content">
                     <p-table [value]="dashBoardData.ultimeFatture ?? []" [paginator]="true" [rows]="5">
@@ -70,10 +70,10 @@
               </p-card>
         </div>
         <div class="col-6">
-            <p-card>
+            <p-card *ngIf="dashBoardData">
                 <ng-template pTemplate="title">Ultimi clienti</ng-template>
                 <ng-template pTemplate="content">
-                    <p-table [value]="dashBoardData.ultimiClienti ?? []" [paginator]="true" [rows]="5">
+                    <p-table [value]="dashBoardData.ultimiClienti ?? []" [paginator]="true" [rows]="5" *ngIf="dashBoardData">
                         <ng-template pTemplate="header">
                         <tr>
                             <th>Nome</th>
@@ -99,10 +99,10 @@
     </div>
     <div class="row mt-4">
         <div class="col-6">
-            <p-card [className]="{'p-card-shadow': true}">
+            <p-card [className]="{'p-card-shadow': true}" *ngIf="dashBoardData">
                 <ng-template pTemplate="title">Ultimi ordini</ng-template>
                 <ng-template pTemplate="content">
-                    <p-table [value]="dashBoardData.ultimiOrdini ?? []" [paginator]="true" [rows]="5">
+                    <p-table [value]="dashBoardData.ultimiOrdini ?? []" [paginator]="true" [rows]="5" *ngIf="dashBoardData">
                         <ng-template pTemplate="header">
                         <tr>
                             <th>Nome</th>
@@ -125,10 +125,10 @@
 
         </div>
         <div class="col-6">
-            <p-card>
+            <p-card *ngIf="dashBoardData">
                 <ng-template pTemplate="title">Ultimi prodotti</ng-template>
                 <ng-template pTemplate="content">
-                    <p-table [value]="dashBoardData.ultimiProdotti ?? []" [paginator]="true" [rows]="5">
+                    <p-table [value]="dashBoardData.ultimiProdotti ?? []" [paginator]="true" [rows]="5" *ngIf="dashBoardData">
                         <ng-template pTemplate="header">
                         <tr>
                             <th>Nome</th>
