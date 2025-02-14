@@ -7,6 +7,7 @@ import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../../../services/auth.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { environment } from '../../../../environment/environment';
+import  packageJson  from '../../../../../package.json'
 
 
 @Component({
@@ -19,7 +20,7 @@ import { environment } from '../../../../environment/environment';
 export class LoginComponent {
   loginForm: FormGroup;
   submitted = false;
-  version = environment.version;
+  version = packageJson.version;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
