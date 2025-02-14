@@ -1,0 +1,119 @@
+<ct-dialog
+  [size]="'large'"
+  [title]="edit ? 'Modifica Ordine' : 'Nuovo Ordine'"
+  [footerActions]="footerActions"
+>
+  <!-- Dati principali dell'ordine -->
+  <div class="row">
+    <div class="col-4 p-3">
+      <p-float-label>
+        <p-select
+        placeholder="Seleziona un cliente"
+        [(ngModel)]="selectedCliente"
+        [options]="clientiList"
+        id="cliente"
+      >
+        <!-- Template per la visualizzazione di ciascuna opzione -->
+        <ng-template let-option pTemplate="item">
+          {{ (option.nome && option.nome.trim().length > 0) ? option.nome : option.ragioneSociale }}
+        </ng-template>
+      
+        <!-- Template per la visualizzazione dell'elemento selezionato -->
+        <ng-template let-option pTemplate="selectedItem">
+          {{ (option.nome && option.nome.trim().length > 0) ? option.nome : option.ragioneSociale }}
+        </ng-template>
+      </p-select>
+              <label for="cliente">Seleziona un cliente</label>
+      </p-float-label>
+    </div>
+    <div class="col-4 p-3">
+      <p-float-label>
+        <p-datePicker
+          type="datetime-local"
+          [disabled]="true"
+          [(ngModel)]="dataOrdine"
+        >
+        </p-datePicker>
+        <label>Data ordine</label>
+      </p-float-label>
+    </div>
+    <div class="col-4 p-3">
+      <p-float-label>
+        <p-select
+          placeholder="Seleziona stato"
+          [(ngModel)]="stato"
+          [options]="['In corso', 'Completo']"
+          id="cliente"
+        >
+        </p-select>
+        <label for="cliente">Seleziona stato ordine</label>
+      </p-float-label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col p-3">
+      <h3>Dettagli Ordine</h3>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p-table [value]="orderDetails">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Prodotto</th>
+              <th>Quantità</th>
+              <th>Prezzo Unitario</th>
+              <th>IVA</th>
+              <th>Totale No Iva</th>
+              <th>Azioni</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-detail let-i="rowIndex">
+            <tr>
+              <td>{{ detail.prodotto.nome }}</td>
+              <td>{{ detail.quantita }}</td>
+              <td>{{ detail.prezzoUnitario }}</td>
+              <td>{{detail.prodotto.aliquotaIVA}}</td>
+              <td>{{ detail.prezzoUnitario * detail.quantita }}</td>
+              <td>
+                <p-button
+                  label="Rimuovi"
+                  icon="pi pi-trash"
+                  (click)="removeDettaglio(i)"
+                >
+                </p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-4 p-3">
+        <p-select
+          label="Prodotto"
+          placeholder="Seleziona un prodotto"
+          [(ngModel)]="selectedProdotto"
+          [options]="prodottiList"
+          optionLabel="nome"
+        >
+        </p-select>
+      </div>
+      <div class="col-4 p-3">
+        <ct-input
+          type="number"
+          placeholder="Inserisci Quantità"
+          [(ctModel)]="dettaglioQuantita"
+        >
+        </ct-input>
+      </div>
+      <div class="col-4 p-3">
+        <p-button
+          label="Aggiungi Prodotto"
+          icon="pi pi-plus"
+          (click)="addDettaglio()"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</ct-dialog>

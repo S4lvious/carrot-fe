@@ -1,0 +1,48 @@
+<div class="sidebar" [class.closed]="isCollapsed">
+  <div class="sidebar-header">
+    <h3 *ngIf="!isCollapsed">Carrot</h3>
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <i class="pi" [ngClass]="isCollapsed ? 'pi-angle-right' : 'pi-angle-left'"></i>
+    </button>
+  </div>
+  
+  <ul class="menu">
+    <li >
+      <a [routerLink]="'/dashboard'" routerLinkActive="active">
+        <i class="pi pi-chart-line"></i>
+        <span *ngIf="!isCollapsed">Dashboard</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/ordini" routerLinkActive="active">
+        <i class="pi pi-shopping-cart"></i>
+        <span *ngIf="!isCollapsed">Ordini</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/clienti" routerLinkActive="active">
+        <i class="pi pi-users"></i>
+        <span *ngIf="!isCollapsed">Clienti</span>
+      </a>
+    </li>
+    <li >
+      <a [routerLink]="'/fatture'" routerLinkActive="active">
+        <i class="pi pi-euro"></i>
+        <span *ngIf="!isCollapsed">Fatture</span>
+      </a>
+    </li>
+    <li >
+      <a [routerLink]="'/prodotti'" routerLinkActive="active">
+        <i class="pi pi-barcode"></i>
+        <span *ngIf="!isCollapsed">Prodotti</span>
+      </a>
+    </li>
+    <li >
+      <a [routerLink]="'/categorie'" routerLinkActive="active">
+        <i class="pi pi-bookmark"></i>
+        <span *ngIf="!isCollapsed">Categorie</span>
+      </a>
+    </li>
+
+  </ul>
+</div>

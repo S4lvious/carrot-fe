@@ -1,0 +1,48 @@
+.carrot-simple-dialog{
+    ::ng-deep &.p-dialog {
+        border-radius: 8px !important; 
+        padding: 24px;
+        margin: 24px;        
+        &.carrot-dialog-extra-small {
+            width: 280px; 
+        }
+
+        &.carrot-dialog-medium, &.carrot-dialog-medium-hs {
+            width: 636px;
+
+            &.carrot-dialog-medium {
+                min-height: 400px;
+            }
+
+            &.carrot-dialog-medium-hs{
+                min-height: 300px
+            }
+        }
+
+        &.carrot-dialog-large, &.carrot-dialog-large-hs {
+            width: 960px;
+            min-height: 600px;            
+
+            &.carrot-dialog-large-hs{
+                min-height: 300px
+            }
+        }
+        &.carrot-dialog-extra-large {
+            width: 1274px;
+            min-height: 600px;            
+    
+        }
+        .buttons-right{
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 100%;
+    
+                p-button{
+                    margin: 0px 0px 0px 8px;
+                }
+            }
+        }
+    
+    }
+

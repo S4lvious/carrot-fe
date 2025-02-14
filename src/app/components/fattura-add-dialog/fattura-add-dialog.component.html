@@ -1,0 +1,65 @@
+<ct-dialog [size]="'large'" [title]="'Crea fattura da ordine'" [footerActions]="footerActions">
+  <div class="row">
+    <div class="col">
+      <p-ifta-label>
+        <p-select [filter]="true" filterBy="id" [(ngModel)]="ordine" [optionLabel]="'id'" placeholder="Seleziona ordine"
+          [options]="ordineSelect" (onChange)="selectionChange()">
+        </p-select>
+        <label>Seleziona ordine</label>
+      </p-ifta-label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <p-table [value]="orderDetails">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Prodotto</th>
+            <th>Quantità</th>
+            <th>Prezzo Unitario</th>
+            <th>IVA</th>
+            <th>Totale No Iva</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-detail let-i="rowIndex">
+          <tr>
+            <td>{{ detail.prodotto.nome }}</td>
+            <td>{{ detail.quantita }}</td>
+            <td>{{ detail.prezzoUnitario }}</td>
+            <td>{{detail.prodotto.aliquotaIVA}}</td>
+            <td>{{ detail.prezzoUnitario * detail.quantita }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <p-ifta-label>
+        <label>Applica ritenuta</label>
+        <p-check-box [(ngModel)]="applicareRitenuta" [binary]="true"></p-check-box>
+      </p-ifta-label>
+    </div>
+    <div class="col">
+      <p-ifta-label>
+        <label>Ritenuta</label>
+        <ct-input type="number" [disabled]="!applicareRitenuta" [(ctModel)]="ritenutaAcconto"></ct-input>
+      </p-ifta-label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 p-3">
+      <p-ifta-label>
+        <p-date-picker [(ngModel)]="scadenza"></p-date-picker>
+        <label>Seleziona data di scadenza</label>
+      </p-ifta-label>
+    </div>
+    <div class="col-6 p-3">
+      <p-ifta-label>
+        <p-select [(ngModel)]="stato" [options]="['Pagata', 'Non pagata']"></p-select>
+        <label>Seleziona stato</label>
+      </p-ifta-label>
+    </div>
+  </div>
+
+</ct-dialog>

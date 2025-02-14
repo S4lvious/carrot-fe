@@ -1,0 +1,50 @@
+<div class="login-container">
+    <div class="login-card">
+        <h2 class="login-title">CarrotPMI</h2>
+        <p class="login-subtitle">Accedi al tuo account</p>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input 
+                    pInputText 
+                    id="email" 
+                    type="email" 
+                    formControlName="email"
+                    class="input-field"
+                    [ngClass]="{'invalid': submitted && f['email'].errors}"
+                >
+                <div *ngIf="submitted && f['email'].errors" class="error-message">
+                    <p *ngIf="f['email'].errors['required']">L'email è obbligatoria.</p>
+                    <p *ngIf="f['email'].errors['email']">Formato email non valido.</p>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                    id="password"
+                    type="password"
+                    formControlName="password"
+                    class="input-field"
+                    inputStyleClass="w-100"
+                    [ngClass]="{'invalid': submitted && f['password'].errors}"
+                >
+                <div *ngIf="submitted && f['password'].errors" class="error-message">
+                    <p *ngIf="f['password'].errors['required']">La password è obbligatoria.</p>
+                    <p *ngIf="f['password'].errors['minlength']">Minimo 6 caratteri.</p>
+                </div>
+            </div>
+
+            <!-- Pulsante Login -->
+            <button type="submit" class="login-button">Accedi</button>
+
+            <!-- Link Recupero Password -->
+            <p class="forgot-password">
+                <a href="#">Hai dimenticato la password?</a>
+            </p>
+        </form>
+    </div>
+</div>

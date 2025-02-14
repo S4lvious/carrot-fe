@@ -1,0 +1,134 @@
+
+.input-container{
+    label{
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    input, .view-only-container{
+        width: 100%;
+        padding: 14px 12px;
+        background-image: none;
+        border-radius: 8px;
+        border: none;
+        text-overflow: ellipsis;
+
+        &.with-icon {
+            padding-right: 34px;
+        }
+
+        &.with-two-icons {
+            padding-right: 64px;
+        }
+
+        &:enabled:focus{
+            box-shadow: inset 0px 0px 0px 1px #398CFC;
+        }
+    }
+    
+    & > span{
+        position: relative;
+
+        bm-icon{
+            position: absolute;
+            top: calc(50% - 9px);
+            right: 12px;
+
+            &[size=small] {
+                top: calc(50% - 6px);
+                cursor: pointer;
+            }
+
+            + bm-icon {
+                right: 42px;
+            }
+
+            > i::before{
+                font-size: 15px;
+            }
+        }
+
+        bm-tag {
+            position: absolute;
+            right: 9px;
+            top: calc(50% - 5px);
+
+            + bm-icon {
+                right: 42px;
+            }
+        }
+    }
+
+    small{
+        display: block;
+        margin-top: 4px;
+    }
+
+    &.disabled{
+    
+        input{
+            opacity: 1;
+    
+        }
+    
+
+    }
+
+    &.invalid {
+        input{
+            box-shadow: inset 0px 0px 0px 1px var(--error);
+        }
+    }
+
+    &.view-only{
+
+
+        .view-only-container {
+            display: flex;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            align-items: center;
+            gap: 8px;
+            height: 44px;
+
+            .view-only-text {
+                flex: 1;
+            }
+        }
+
+        & > span {
+            display: none
+        }
+    }
+
+    &.small {
+        label {
+            display: block;
+            margin-bottom: 4px;
+        }
+    
+        input {
+            padding: 4px 6px;
+            border-radius: 2px;
+
+            &.with-icon {
+                padding-right: 20px;
+            }
+
+            &.with-two-icons {
+                padding-right: 48px;
+            }
+        }
+
+        > span {
+            bm-icon {
+                top: calc(50% - 8px);
+                right: 6px;
+
+                & + bm-icon {
+                    right: 28px;
+                }    
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<div class="input-container" [ngClass]="{'disabled' : disabled, 'invalid': isInvalid, 'view-only' : view == 'viewOnly', small: size === 'small'}">
+    <label bmText="b4s" *ngIf="(label || settedName)">{{ label }}</label>
+    <span>
+      <input #inputModel="ngModel" [(ngModel)]="ctModel" (ngModelChange)="emitValue(ctModel)" pInputText bmText="b3" [placeholder]="placeholder" [disabled]="disabled || view == 'viewOnly'"
+        [class.with-icon]="icon || primaryIcon" [class.with-two-icons]="secondaryIcon"
+        [name]="name"  [required]="required"
+        [type]="type" autocomplete="off"
+        [maxlength]="maxLength"     
+        />
+        </span>
+    <small bmText="note" *ngIf="helperText && !isInvalid">{{ helperText }}</small>
+  </div>
+  
+  

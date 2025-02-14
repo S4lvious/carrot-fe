@@ -1,0 +1,48 @@
+<ct-dialog [size]="'small'" [title]="'Inserisci cliente'" [footerActions]="footerActions">
+    <div class="row">
+        <div class="col-6 p-3">
+            <ct-input [label]="'Nome'" [(ctModel)]="nome"></ct-input>
+        </div>
+        <div class="col-6 p-3">
+          <ct-input [label]="'Cognome'" [(ctModel)]="cognome"></ct-input>
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-6 p-3">
+          <ct-input [label]="'Telefono'" [(ctModel)]="telefono"></ct-input>
+        </div>
+        <div class="col-6 p-3">
+          <ct-input [label]="'Indirizzo'" [(ctModel)]="indirizzo"></ct-input>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-6 p-3">
+          <ct-input [label]="'Email'"[(ctModel)]="email"></ct-input>
+        </div>
+        <div class="col-6 p-3">
+          <ct-input [label]="'Codice Fiscale'" [(ctModel)]="codiceFiscale"></ct-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 p-3">
+          <ct-input [label]="'Citta'" [(ctModel)]="citta"></ct-input>
+        </div>
+        <div class="col-6 p-3">
+          <ct-input [label]="'CAP'" [(ctModel)]="cap"></ct-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 p-3">
+          <ct-input [label]="'Partita IVA'" [(ctModel)]="partitaIva"></ct-input>
+        </div>
+        <div class="col-6 p-3">
+          <ct-input [label]="'Ragione Sociale'" [(ctModel)]="ragioneSociale"></ct-input>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-6 p-3">
+          <ct-input [label]="'Provincia'" [(ctModel)]="provincia"></ct-input>
+        </div>
+
+      </div>
+  </ct-dialog>

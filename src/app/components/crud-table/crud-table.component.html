@@ -1,0 +1,123 @@
+<div class="crud-table"> 
+  <!-- Header con titolo e pulsante aggiungi -->
+  <div class="crud-header mb-4">
+    <h2 class="mb-4">{{ config.title }}</h2>
+    <p-button
+      label="{{ config.addButtonText || 'Aggiungi' }}"
+      icon="pi pi-plus"
+      (click)="handleAction('add')">
+    </p-button>
+  </div>
+
+  <!-- p-table con filtro globale e per colonna -->
+  <p-table
+    #dt
+    stripedRows
+    *ngIf="_data.length > 0"
+    [value]="_data"
+    [paginator]="true"
+    [rows]="5"
+    [globalFilterFields]="globalFilterFields"
+    responsiveLayout="scroll"
+  >
+        
+    <!-- Header con due righe: intestazioni e filtri per colonna -->
+    <ng-template pTemplate="header">
+      <!-- Prima riga: intestazioni -->
+      <tr>
+        <th *ngFor="let col of config.columns">{{ col.header }}</th>
+        <th>Azioni</th>
+      </tr>
+      <!-- Seconda riga: filtri per colonna (solo se abilitati) -->
+      <tr>
+        <th *ngFor="let col of config.columns">
+          <ng-container *ngIf="col.filter">
+            <ng-container [ngSwitch]="col.type">
+              <!-- Filtro per campo testuale -->
+              <ng-container *ngSwitchCase="'text'">
+                <input
+                  pInputText
+                  type="text"
+                  (input)="onColumnFilter($event, col)"
+                  placeholder="Filtra {{ col.header }}"
+                />
+              </ng-container>
+              <!-- Filtro per campo booleano -->
+              <ng-container *ngSwitchCase="'boolean'">
+                <p-select
+                  [options]="booleanOptions"
+                  (onChange)="onColumnFilter($event, col)"
+                  placeholder="Filtra {{ col.header }}"
+                  [showClear]="true"
+                ></p-select>
+              </ng-container>
+              <!-- Filtro per campo data -->
+              <ng-container *ngSwitchCase="'custom'">
+                <p-select
+                  [options]="getCustomOptions(col.props)"
+                  (onChange)="onColumnFilter($event, col)"
+                  placeholder="Filtra {{ col.header }}"
+                  [showClear]="true"
+                ></p-select>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'date'">
+                <p-datePicker
+                  dateFormat="dd/mm/yy"
+                  (onSelect)="onColumnFilter($event, col)"
+                  placeholder="Filtra {{ col.header }}"
+                ></p-datePicker>
+              </ng-container>
+              <!-- Fallback: filtro testuale -->
+              <ng-container *ngSwitchDefault>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="onColumnFilter($event, col)"
+                  placeholder="Filtra {{ col.header }}"
+                />
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+
+    <!-- Corpo della tabella -->
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td *ngFor="let col of config.columns">
+          <!-- Per colonne di tipo booleano mostriamo un'icona -->
+          <ng-container *ngIf="col.type === 'boolean'; else defaultValue">
+            <p-button 
+              [rounded]="true"
+              [text]="true"
+              severity="secondary"
+              size="small"
+              [icon]="getNestedValue(item, col.field) ? 'pi pi-check' : 'pi pi-times'">
+            </p-button>
+          </ng-container>
+          <!-- Per gli altri tipi mostriamo il valore -->
+          <ng-template #defaultValue>
+            {{ getNestedValue(item, col.field) || '' }}
+          </ng-template>
+        </td>
+        <!-- Pulsante per il menu contestuale -->
+        <td>
+          <p-button
+            [rounded]="true"
+            [text]="true"
+            severity="secondary"
+            icon="pi pi-ellipsis-v"
+            size="small"
+            (click)="onContextMenu($event, item)">
+          </p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Context Menu -->
+  <p-contextMenu #cm [model]="menuItems"></p-contextMenu>
+</div>

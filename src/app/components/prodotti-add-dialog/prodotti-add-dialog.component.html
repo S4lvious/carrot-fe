@@ -1,0 +1,30 @@
+<ct-dialog [size]="'small'" [title]="'Inserisci prodotto'" [footerActions]="footerActions">
+    <div class="row">
+      <div class="col-4 p-3">
+        <ct-input [label]="'Nome'" [(ctModel)]="nome"></ct-input>
+      </div>
+      <div class="col-4 p-3">
+        <ct-input [label]="'Descrizione'" [(ctModel)]="descrizione"></ct-input>
+      </div>
+      <div class="col-4 p-3">
+        <ct-input [label]="'Prezzo'" [(ctModel)]="prezzo"></ct-input>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 p-3">
+        <p-select placeholder="Seleziona categoria" [optionLabel]="'nome'" [options]="categoria" [(ngModel)]="selectedCategoria"></p-select>
+    </div>
+      <div class="col-4 p-3">
+        <p-select placeholder="Seleziona iva" [options]="[22,10,5,0]" [(ngModel)]="aliquotaIVA"></p-select>
+      </div>
+      <div class="col-4 p-3">
+        <ct-input [disabled]="!esauribile" [label]="'Quantità'" [(ctModel)]="quantita"></ct-input>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 p-3">
+        <p-togglebutton [(ngModel)]="esauribile" [onLabel]="'Prodotto esauribile'" offLabel="Prodotto non esauribile" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" styleClass="w-36" ariaLabel="Do you confirm" />
+    </div>
+    </div>
+  </ct-dialog>
+  
