@@ -1,0 +1,34 @@
+name: Deploy to GKE
+
+on:
+  push:
+    branches:
+      - main  # Il deploy avviene quando pusci su main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Configure kubectl
+        run: |
+          gcloud container clusters get-credentials autopilot-cluster-1 --region europe-west9 --project promising-cairn-450815-a4
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t your-dockerhub-username/your-image-name:latest .
+          echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+          docker push your-dockerhub-username/carrot-frontend:latest
+
+      - name: Deploy to GKE
+        run: |
+          kubectl apply -f k8s/
+          kubectl rollout restart deployment your-deployment-name
