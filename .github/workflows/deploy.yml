@@ -26,7 +26,7 @@ jobs:
         run: |
           docker build -t your-dockerhub-username/your-image-name:latest .
           echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
-          docker push your-dockerhub-username/carrot-frontend:latest
+          docker push s4lvious/carrot-frontend:latest
 
       - name: Deploy to GKE
         run: |
