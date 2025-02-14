@@ -5,6 +5,14 @@
   align-items: center;
   height: 100vh;
   background-color: #f4f4f4;
+  position: relative;
+}
+
+.version-info {
+  position: absolute;
+  color: #666;
+  bottom:10px;
+  right: 10px;
 }
 
 /* Card di login */
