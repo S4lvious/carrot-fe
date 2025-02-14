@@ -1,0 +1,8 @@
+@media (max-width: 768px) {
+    .dashboard .row > [class*="col-"] {
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+      margin-bottom: 10px;
+    }
+  }
+  

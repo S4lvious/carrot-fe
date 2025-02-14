@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
+    styleUrl: 'dashboard.component.scss',
     standalone: true,
     imports: [ButtonModule, CardModule, ChartModule, TableModule, CommonModule]
 })

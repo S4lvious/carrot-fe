@@ -39,23 +39,13 @@
 .menu li {
   padding: 15px 10px;
   border-radius: 10px;
-
 }
 
-li:hover {
-  background: #34495e;
-}
-
-li.active {
-  background: #34495e;
-}
-
-
+.menu li:hover,
+.menu li.active,
 .menu li:has(> a.active) {
   background: #34495e;
 }
-
-
 
 .menu li a {
   text-decoration: none;
@@ -71,4 +61,45 @@ li.active {
 
 .sidebar.closed .menu li a span {
   display: none;
+}
+
+/* Media query per smartphone */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    position: fixed; /* Assicura che la sidebar sia sempre fissata */
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 60px;  /* Altezza ridotta per smartphone */
+    padding: 10px;
+    flex-direction: row; /* Disposizione orizzontale */
+  }
+
+  .menu li a span {
+    text-decoration: none;
+    color: white;
+    display: none;
+    align-items: center;
+  }
+  
+
+  /* Nascondo l'header se non serve */
+  .sidebar-header {
+    display: none;
+  }
+
+  /* Adatto il menu per un layout orizzontale */
+  .menu {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .menu li {
+    padding: 10px 5px;
+    border-radius: 0; /* Look più flat */
+  }
 }
