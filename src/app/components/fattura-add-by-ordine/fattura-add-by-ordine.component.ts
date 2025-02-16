@@ -16,11 +16,14 @@ import { Ordine } from '../../models/ordine.model';
 import { Checkbox } from 'primeng/checkbox';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { DatePicker } from 'primeng/datepicker';
+import { CtCheckboxComponent } from "../checkbox/ct-checkbox.component";
+import { PanelModule } from 'primeng/panel';
+import { IftaLabel } from 'primeng/iftalabel';
 
 @Component({
   selector: 'app-prodotti-add-dialog',
   standalone: true,
-  imports: [BmDialogComponent, InputTextModule, CtInputComponent, FormsModule, ToggleButtonModule, Checkbox, FloatLabelModule, DatePicker, Select],
+  imports: [BmDialogComponent, IftaLabel,InputTextModule, PanelModule,CtInputComponent, FormsModule, ToggleButtonModule, Checkbox, FloatLabelModule, DatePicker, Select, CtCheckboxComponent],
   templateUrl: 'fattura-add-by-ordine.component.html',
   styles: []
 })
@@ -28,6 +31,7 @@ export class FatturaAddByOrdine extends ComponentDialog {
 
   @Input() data: Ordine;
   applicareRitenuta: boolean = false;
+  generaMovimento: boolean = false;
   ritenutaAcconto: number = 0;
   scadenza: Date = new Date();
   stato: string = "Non pagata";
@@ -41,7 +45,8 @@ export class FatturaAddByOrdine extends ComponentDialog {
             applicareRitenuta: this.applicareRitenuta,
             ritenutaAcconto: this.ritenutaAcconto,
             scadenza: this.scadenza,
-            stato: this.stato
+            stato: this.stato,
+            inserisciMovimento: this.generaMovimento
         }).subscribe(() => {
             this.close();
           });

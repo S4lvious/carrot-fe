@@ -40,4 +40,5 @@ export interface fatturaDaOrdine {
   ritenutaAcconto: number,
   scadenza: Date,
   stato: String
+  inserisciMovimento: boolean
 }

@@ -34,6 +34,7 @@ export class FatturaAddDialog extends ComponentDialog {
   ordine: Ordine
   ordineSelect: Ordine[];
   applicareRitenuta: boolean = false;
+  generaMovimento: boolean = false;
   ritenutaAcconto: number = 0;
   scadenza: Date = new Date();
   stato: string = "Non pagata";
@@ -50,7 +51,8 @@ export class FatturaAddDialog extends ComponentDialog {
               applicareRitenuta: this.applicareRitenuta,
               ritenutaAcconto: this.ritenutaAcconto,
               scadenza: this.scadenza,
-              stato: this.stato
+              stato: this.stato,
+              inserisciMovimento: this.generaMovimento
           }).subscribe(() => {
               this.close();
             });

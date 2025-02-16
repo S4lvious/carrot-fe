@@ -1,0 +1,85 @@
+<ct-dialog
+  [size]="'extra-large'"
+  [title]="'Aggiungi Operazione Prima Nota'"
+  [footerActions]="footerActions"
+  class="prima-nota-dialog"
+>
+
+  <!-- Pannello per la Data Operazione e Nome -->
+  <p-panel header="Dati Generali" class="mb-3" [style]="{'marginBottom': '10px'}">
+    <div class="row">
+      <div class="col-md-6">
+        <p-ifta-label>
+          <p-date-picker [(ngModel)]="dataOperazione"></p-date-picker>
+          <label>Seleziona Data Operazione</label>
+        </p-ifta-label>
+      </div>
+      <div class="col-md-6">
+        <p-ifta-label>
+          <ct-input type="text" [(ctModel)]="nome"></ct-input>
+          <label>Nome Operazione</label>
+        </p-ifta-label>
+      </div>
+    </div>
+  </p-panel>
+
+  <p-panel header="Fattura o Incarico Associato (Opzionale)" class="mb-3" [style]="{'marginBottom': '10px'}">
+    <div class="row">
+      <div class="col">
+        <p-ifta-label>
+          <p-select [(ngModel)]="fattura" [options]="fatturaSelect" [optionLabel]="'numeroFattura'" placeholder="Seleziona fattura">
+          </p-select>
+          <label>Seleziona una fattura (se applicabile)</label>
+        </p-ifta-label>
+      </div>
+      <div class="col">
+        <p-ifta-label>
+          <p-select [(ngModel)]="incarico" [options]="ordineSelect" [optionLabel]="'id'" placeholder="Seleziona incarico">
+          </p-select>
+          <label>Seleziona un incarico (se applicabile)</label>
+        </p-ifta-label>
+      </div>
+    </div>
+  </p-panel>
+
+  <!-- Pannello per la Categoria e il Metodo di Pagamento -->
+  <p-panel header="Categoria e Metodo di Pagamento" class="mb-3" [style]="{'marginBottom': '10px'}">
+    <div class="row">
+      <div class="col-md-6">
+        <p-ifta-label>
+          <p-select [(ngModel)]="categoria" [options]="categoriaSelect" [optionLabel]="'nome'">
+          </p-select>
+          <label>Seleziona Categoria</label>
+        </p-ifta-label>
+      </div>
+      <div class="col-md-6">
+        <p-ifta-label>
+          <p-select [(ngModel)]="metodoPagamento" [options]="metodoPagamentoSelect" [optionLabel]="'nome'">
+          </p-select>
+          <label>Seleziona Metodo di Pagamento</label>
+        </p-ifta-label>
+      </div>
+    </div>
+  </p-panel>
+
+  <!-- Pannello Importo e Tipo Movimento -->
+  <p-panel header="Dettagli Economici" class="mb-3" [style]="{'marginBottom': '10px'}">
+    <div class="row">
+      <div class="col-md-6">
+        <p-ifta-label>
+          <ct-input type="number" [(ctModel)]="importo"></ct-input>
+          <label>Importo</label>
+        </p-ifta-label>
+      </div>
+      <div class="col-md-6">
+        <p-ifta-label>
+          <p-select [(ngModel)]="tipoMovimento" [options]="['ENTRATA', 'USCITA']">
+          </p-select>
+          <label>Tipo di Movimento</label>
+        </p-ifta-label>
+      </div>
+    </div>
+  </p-panel>
+
+  <!-- Pannello per Associare una Fattura (Opzionale) -->
+</ct-dialog>

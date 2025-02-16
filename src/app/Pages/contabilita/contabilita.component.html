@@ -1,0 +1,74 @@
+<div class="container mt-4">
+    <!-- Prima Riga: Grafici Principali -->
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <p-card>
+          <ng-template pTemplate="title">Entrate VS Uscite</ng-template>
+          <ng-template pTemplate="content">
+            <p-chart type="pie" [data]="chartEntrateUscite" style="display: block; width:250px; height:250px;"></p-chart>
+        </ng-template>
+        </p-card>
+      </div>
+      <div class="col-md-6 mb-4">
+        <p-card>
+          <ng-template pTemplate="title">Saldo mensile</ng-template>
+          <ng-template pTemplate="content">
+            <p-chart type="line" [data]="chartSaldoMensile"></p-chart>
+          </ng-template>
+        </p-card>
+      </div>
+    </div>
+  
+    <!-- Seconda Riga: Grafici di Distribuzione -->
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <p-card>
+          <ng-template pTemplate="title">Distribuzione Entrate per Categoria</ng-template>
+          <ng-template pTemplate="content">
+            <p-chart type="pie" [data]="chartDistribuzioneEntrate" style=" display: block;width:250px; height:250px;"></p-chart>
+          </ng-template>
+        </p-card>
+      </div>
+      <div class="col-md-6 mb-4">
+        <p-card>
+          <ng-template pTemplate="title">Distribuzione Uscite per Categoria</ng-template>
+          <ng-template pTemplate="content">
+            <p-chart type="pie" [data]="chartDistribuzioneUscite" style="display: block;width:250px; height:250px;"></p-chart>
+          </ng-template>
+        </p-card>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <p-card>
+          <ng-template pTemplate="title">Prodotti che vendi che generano piu uscite</ng-template>
+          <ng-template pTemplate="content">
+            <p-chart type="pie" [data]="chartProdottiPiuCostosi" style=" display: block;width:250px; height:250px;"></p-chart>
+          </ng-template>
+        </p-card>
+      </div>
+      <div class="col-md-6 mb-4">
+        <p-card>
+          <ng-template pTemplate="title">Prodotti che vendi che generano piu entrate rispetto alle uscite</ng-template>
+          <ng-template pTemplate="content">
+            <p-chart type="bar" [data]="chartRapportoEntrateUscite"></p-chart>
+          </ng-template>
+        </p-card>
+      </div>
+
+    </div>
+
+  
+    <!-- Tabella delle operazioni di prima nota -->
+    <div class="row">
+      <div class="col-12">
+        <p-card>
+          <ng-template pTemplate="content">
+            <app-crud-table [config]="config" [data]="primaNota"></app-crud-table>
+          </ng-template>
+        </p-card>
+      </div>
+    </div>
+  </div>
+  

@@ -1,32 +1,52 @@
-<ct-dialog [size]="'large'" [title]="'Crea fattura da ordine'" [footerActions]="footerActions">
+<ct-dialog [size]="'large'" [title]="'Crea fattura da ordine'" [footerActions]="footerActions" class="fattura-dialog">
+
+  <!-- Pannello: Ritenuta -->
+  <p-panel header="Ritenuta" [style]="{'marginBottom': '10px'}">
     <div class="row">
       <div class="col-6">
-        <p-float-label>
-            <p-check-box [(ngModel)]="applicareRitenuta" [binary]="true"></p-check-box>
-            <label>Applica ritenuta</label>
-        </p-float-label>
+        <ct-checkbox [background]="true" [label]="'Applica ritenuta'" [(bmModel)]="applicareRitenuta"></ct-checkbox>
       </div>
-      <div class="col-6 p-3">
+      <div class="col-6">
         <p-float-label>
-            <ct-input type="number" [disabled]="!applicareRitenuta" [(ctModel)]="ritenutaAcconto"></ct-input>
-            <label>Ritenuta</label>
+          <ct-input type="number" [disabled]="!applicareRitenuta" [(ctModel)]="ritenutaAcconto"></ct-input>
+          <label>Ritenuta</label>
         </p-float-label>
       </div>
     </div>
-    <div class="row">
-        <div class="col-6 p-3">
-          <p-float-label>
-            <p-date-picker [(ngModel)]="scadenza"></p-date-picker>
-            <label>Seleziona data di scadenza</label>
-          </p-float-label>
-        </div>
-        <div class="col-6 p-3">
-          <p-float-label>
-            <p-select [(ngModel)]="stato" [options]="['Pagata', 'Non pagata']"></p-select>
-            <label>Seleziona stato</label>
-          </p-float-label>
-        </div>
-      </div>
+  </p-panel>
 
-  </ct-dialog>
-  
+  <!-- Pannello: Scadenza e Stato -->
+  <p-panel header="Scadenza e Stato" [style]="{'marginBottom': '10px'}">
+    <div class="row">
+      <div class="col-6">
+        <p-ifta-label>
+          <p-date-picker [(ngModel)]="scadenza"></p-date-picker>
+          <label>Seleziona data di scadenza</label>
+        </p-ifta-label>
+          </div>
+      <div class="col-6">
+        <p-float-label>
+          <p-select [(ngModel)]="stato" [options]="['Pagata', 'Non pagata']"></p-select>
+          <label>Seleziona stato</label>
+        </p-float-label>
+      </div>
+    </div>
+  </p-panel>
+
+  <!-- Pannello: Movimento -->
+  <p-panel header="Movimento" [style]="{'marginBottom': '10px'}">
+    <div class="row">
+      <div class="col-4">
+        <ct-checkbox [label]="'Genera movimento'" [background]="true" [(bmModel)]="generaMovimento"></ct-checkbox>
+      </div>
+      <div class="col-8">
+        <p class="text-muted" style="font-size: 0.9rem;">
+          Genererai un movimento in entrata con il valore del totale dovuto della fattura.
+          La categoria dell'entrata sarà quella del primo prodotto venduto nella fattura e il metodo di pagamento il primo impostato.
+          Potrai modificare queste informazioni in seguito.
+        </p>
+      </div>
+    </div>
+  </p-panel>
+
+</ct-dialog>

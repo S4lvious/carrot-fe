@@ -94,4 +94,21 @@
     </div>
   </p-panel>
 
+  <p-panel header="Ritenuta" class="mb-3" [style]="{'marginBottom': '10px'}">
+    <div class="row">
+      <div class="col">
+        <ct-checkbox [label]="'Genera movimento in contabilità'" [background]="true"  [(bmModel)]="generaMovimento"></ct-checkbox>
+      </div>
+      <div class="col">
+        <p style="color: gray;">
+          Genererai un movimento in entrata con il valore del totale dovuto della fattura.
+          La categoria del entrata sarà la categoria del primo prodotto venduto nella fattura.
+          Il metodo di pagamento sarà il primo che hai impostato.
+          Potrai cambiare le informazioni in seguito
+        </p>
+      </div>
+    </div>
+  </p-panel>
+  
+
 </ct-dialog>
