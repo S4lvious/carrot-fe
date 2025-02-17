@@ -39,9 +39,9 @@ export class RegisterComponent {
   };
 
   plans = [
-    { name: 'Mensile', price: '€9,99', value: 'mensile', description: 'Accesso per un mese con tutte le funzionalità.' },
-    { name: 'Trimestrale', price: '€24,99', value: 'trimestrale', description: 'Risparmia con tre mesi di accesso completo.' },
-    { name: 'Annuale', price: '€89,99', value: 'annuale', description: 'Il piano più conveniente per un anno di accesso.' },
+    { name: 'Mensile', price: '€9,99', value: 'Mensile', description: 'Accesso per un mese con tutte le funzionalità.' },
+    { name: 'Trimestrale', price: '€24,99', value: 'Trimestrale', description: 'Risparmia con tre mesi di accesso completo.' },
+    { name: 'Annuale', price: '€89,99', value: 'Annuale', description: 'Il piano più conveniente per un anno di accesso.' },
     { name: '', price: 'Gratis', value: '', description: 'Inizia con una prova gratuita senza impegno.' }
   ];
   mailSendend: boolean = false;
