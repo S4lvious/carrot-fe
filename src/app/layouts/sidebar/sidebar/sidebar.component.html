@@ -44,6 +44,13 @@
       </a>
     </li>
     <li >
+      <a [routerLink]="'/categorie-movimento'" routerLinkActive="active">
+        <i class="pi pi-bookmark"></i>
+        <span *ngIf="!isCollapsed">Categorie Movimento</span>
+      </a>
+    </li>
+
+    <li >
       <a [routerLink]="'/contabilita'" routerLinkActive="active">
         <i class="pi pi-chart-line"></i>
         <span *ngIf="!isCollapsed">Modulo contabilita</span>

@@ -12,6 +12,7 @@ import { PrimaNotaComponent } from './Pages/contabilita/contabilita.component';
 import { VerifyEmailComponent } from './Pages/verifcationEmail/verificationEmail.component';
 import { RegisterComponent } from './Pages/register/register.component';
 import { EditUserComponent } from './Pages/user/user.component';
+import { CategorieMovimentoComponent } from './Pages/categorie-movimento/categorie-movimento.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,7 @@ export const routes: Routes = [
       { path: 'ordini', component: OrdiniComponent, canActivate: [authGuard] },
       { path: 'clienti', component: ClientiComponent, canActivate: [authGuard] },
       { path: 'categorie', component: CategorieComponent, canActivate: [authGuard] },
+      { path: 'categorie-movimento', component: CategorieMovimentoComponent, canActivate: [authGuard] },
       { path: 'fatture', component: FattureComponent, canActivate: [authGuard] },
       { path: 'contabilita', component: PrimaNotaComponent, canActivate: [authGuard]},
       { path: 'utente', component: EditUserComponent, canActivate:[authGuard]}

@@ -30,6 +30,7 @@ export class UserService {
         const url = `${this.apiUrl}/${id}`;
         return this.http.get<User>(url);
     }
+
     upgradeSub(planName: string, userId: number) {
         let params = {
             planName: planName,
@@ -39,12 +40,11 @@ export class UserService {
         const url = 'https://api.powerwebsoftware.it/payments/checkout';
         
         return this.http.post(url, {}, { params: params, responseType: 'text' });
-    }
-    
+    }    
 
     // Update a user.
     updateUser(user: User): Observable<User> {
-        const url = `${this.apiUrl}/${user.id}`;
+        const url = `${this.apiUrl}`;
         return this.http.put<User>(url, user);
     }
 

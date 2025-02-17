@@ -19,6 +19,7 @@ import { TipoMovimento } from '../../models/tipo-movimento.model';
 import { DatePipe } from '@angular/common';
 import { Ordine } from '../../models/ordine.model';
 import { OrdiniService } from '../../services/ordine.service';
+import { CategorieMovimentoService } from '../../services/categoria-movimento.service';
 
 @Component({
   selector: 'app-prima-nota-add-dialog',
@@ -50,7 +51,7 @@ export class PrimaNotaAddDialog extends ComponentDialog implements OnInit {
 
   constructor(
     private primaNotaService: PrimaNotaService,
-    private categoriaService: CategorieService,
+    private categoriaService: CategorieMovimentoService,
     private metodoPagamentoService: MetodoPagamentoService,
     private fatturaService: FatturaService,
     private ordineService: OrdiniService,
