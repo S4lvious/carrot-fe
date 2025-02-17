@@ -1,0 +1,78 @@
+<div class="container mt-4">
+  <p-tabView>
+    
+    <!-- TAB GENERALI -->
+    <p-tabPanel header="Generali">
+      <div class="row">
+        <div class="col-md-6">
+          <p-panel header="Dati Anagrafici">
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input pInputText id="username" class="form-control" [(ngModel)]="user.username" required />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input pInputText id="email" class="form-control" [(ngModel)]="user.email" required />
+            </div>
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Telefono</label>
+              <input pInputText id="telefono" class="form-control" [(ngModel)]="user.telefono" />
+            </div>
+          </p-panel>
+        </div>
+
+        <div class="col-md-6">
+          <p-panel header="Indirizzo">
+            <div class="mb-3">
+              <label for="indirizzo" class="form-label">Indirizzo</label>
+              <input pInputText id="indirizzo" class="form-control" [(ngModel)]="user.indirizzo" required />
+            </div>
+            <div class="mb-3">
+              <label for="citta" class="form-label">Città</label>
+              <input pInputText id="citta" class="form-control" [(ngModel)]="user.citta" required />
+            </div>
+            <div class="mb-3">
+              <label for="provincia" class="form-label">Provincia</label>
+              <input pInputText id="provincia" class="form-control" [(ngModel)]="user.provincia" required />
+            </div>
+          </p-panel>
+        </div>
+      </div>
+    </p-tabPanel>
+
+    <!-- TAB SUBSCRIPTION -->
+    <p-tabPanel header="Subscription">
+      <p-panel header="Dettagli Sottoscrizione">
+        <div *ngIf="user.subscription.trial; else activeSubscription">
+          <p class="text-center fw-bold">Seleziona un piano per effettuare l'upgrade</p>
+          <div class="row">
+            <div class="col-md-4" *ngFor="let plan of plans">
+              <p-card class="text-center">
+                <p-header>
+                  <h5>{{ plan }}</h5>
+                </p-header>
+                <p-footer>
+                  <button pButton label="Seleziona" class="p-button-primary" (click)="upgradeSub(plan)"></button>
+                </p-footer>
+              </p-card>
+            </div>
+          </div>
+        </div>
+        
+        <ng-template #activeSubscription>
+          <p class="text-success fw-bold">Abbonamento Attivo</p>
+          <p>Data Inizio: {{ user.subscription.startDate | date:'dd/MM/yyyy' }}</p>
+          <p>Data Fine: {{ user.subscription.endDate | date:'dd/MM/yyyy' }}</p>
+        </ng-template>
+      </p-panel>
+    </p-tabPanel>
+  </p-tabView>
+
+  <!-- BOTTONI -->
+  <p-card [style]="{'marginTop': '10px'}">
+    <div class="d-flex justify-content-end mt-4">
+      <button pButton label="Annulla" class="me-2" (click)="onCancel()"></button>
+      <button pButton label="Salva" (click)="onSave()"></button>
+    </div>
+  </p-card>
+</div>

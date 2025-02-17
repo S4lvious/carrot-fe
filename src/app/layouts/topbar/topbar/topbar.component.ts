@@ -28,6 +28,10 @@ export class TopBarComponent {
 
   }
 
+  editUser() {
+    this.router.navigate(['/utente'])
+  }
+
   toggleSidebar() {
     this.toggleSidebarEvent.emit();
   }
