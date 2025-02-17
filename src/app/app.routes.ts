@@ -9,6 +9,7 @@ import { ProdottiComponent } from './Pages/prodotti/prodotti.component';
 import { CategorieComponent } from './Pages/categorie/categorie.component';
 import { authGuard } from './guards/auth.guard';
 import { PrimaNotaComponent } from './Pages/contabilita/contabilita.component';
+import { VerifyEmailComponent } from './Pages/verifcationEmail/verificationEmail.component';
 
 export const routes: Routes = [
   {
@@ -22,8 +23,10 @@ export const routes: Routes = [
       { path: 'clienti', component: ClientiComponent, canActivate: [authGuard] },
       { path: 'categorie', component: CategorieComponent, canActivate: [authGuard] },
       { path: 'fatture', component: FattureComponent, canActivate: [authGuard] },
-      { path: 'contabilita', component: PrimaNotaComponent, canActivate: [authGuard]}
+      { path: 'contabilita', component: PrimaNotaComponent, canActivate: [authGuard]},
+
     ]
   },
+  { path: 'auth/verify', component: VerifyEmailComponent },
   { path: 'login', component: LoginComponent } // Questa pagina non avrà la sidebar e la topbar
 ];
