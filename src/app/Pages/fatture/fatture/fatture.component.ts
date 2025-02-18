@@ -20,9 +20,8 @@ export class FattureComponent {
     title: 'Fatture',
     addButtonText: 'Aggiungi fattura',
     columns: [
-      { field: 'id', header: 'ID',filter: true,type: 'text' },
-      { field: 'ordine.id', header: 'Ordine ID',filter: true,type: 'text' },
       { field: 'numeroFattura', header: 'Numero Fattura',filter: true,type: 'text' },
+      { field: 'ordine.numero_ordine', header: 'Ordine ID',filter: true,type: 'text' },
       { field: 'dataEmissione', header: 'Data Emissione',filter: true,type: 'date' },
       { field: 'totaleNetto', header: 'Totale Netto',filter: true,type: 'text' },
       { field: 'totaleIVA', header: 'Totale IVA',filter: true,type: 'text' },

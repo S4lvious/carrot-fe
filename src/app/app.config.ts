@@ -10,10 +10,11 @@ import { authenticationInterceptor } from './interceptors/auth.iterceptor';
 import { MessageService } from 'primeng/api';
 import { Toast, ToastModule } from 'primeng/toast';
 import { errorInterceptor } from './interceptors/error.interceptor';
+import { loaderInterceptor } from './interceptors/loader.interceptor';
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(routes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
-        provideHttpClient(withInterceptors([authenticationInterceptor, errorInterceptor])),
+        provideHttpClient(withInterceptors([authenticationInterceptor, errorInterceptor, loaderInterceptor])),
         provideAnimationsAsync(),
         MessageService,
         importProvidersFrom(ToastModule),

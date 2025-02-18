@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-md-6">
         <p-ifta-label>
-          <p-date-picker [(ngModel)]="dataOperazione"></p-date-picker>
+          <p-date-picker [(ngModel)]="dataOperazione" [dateFormat]="'dd-mm'"></p-date-picker>
           <label>Seleziona Data Operazione</label>
         </p-ifta-label>
       </div>
@@ -34,7 +34,7 @@
       </div>
       <div class="col">
         <p-ifta-label>
-          <p-select [(ngModel)]="incarico" [options]="ordineSelect" [optionValue]="'id'" [optionLabel]="'id'" placeholder="Seleziona incarico">
+          <p-select [(ngModel)]="incarico" [options]="ordineSelect" [optionValue]="'id'" [optionLabel]="'numero_ordine'" placeholder="Seleziona incarico">
           </p-select>
           <label>Seleziona un incarico (se applicabile)</label>
         </p-ifta-label>

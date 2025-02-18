@@ -64,7 +64,7 @@ export class PrimaNotaAddDialog extends ComponentDialog implements OnInit {
 
     if (this.data) {
       this.edit =true;
-      this.dataOperazione = this.data.dataOperazione;
+      this.dataOperazione = new Date(this.data.dataOperazione);
       this.nome = this.data.nome;
       this.categoria = this.data.categoria;
       this.metodoPagamento = this.data.metodoPagamento;

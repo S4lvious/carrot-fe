@@ -6,6 +6,7 @@ import { Prodotto } from '../../models/prodotto.model';
 import { mergeMap, of } from 'rxjs';
 import { CategorieMovimentoService } from '../../services/categoria-movimento.service';
 import { CategorieAddDialogComponent } from '../../components/categoria-add-dialog/categoria.add-dialog.component';
+import { CategorieMovimentoAddDialogComponent } from '../../components/categoria-movimento-add-dialog/categoria.add-dialog.component';
 
 @Component({
   selector: 'app-categorie-movimento',
@@ -41,7 +42,7 @@ export class CategorieMovimentoComponent  {
     actions: {
       add: (item) =>
         this._loaderService
-          .load(CategorieAddDialogComponent, item)
+          .load(CategorieMovimentoAddDialogComponent, item)
           .then(() =>
             this._prodottiService
               .getCategories()
@@ -49,7 +50,7 @@ export class CategorieMovimentoComponent  {
           ),
       edit: (item) =>
         this._loaderService
-          .load(CategorieAddDialogComponent, item)
+          .load(CategorieMovimentoAddDialogComponent, item)
           .then(() =>
             this._prodottiService
               .getCategories()

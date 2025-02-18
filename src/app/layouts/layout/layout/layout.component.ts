@@ -6,10 +6,11 @@ import { RouterModule } from '@angular/router';
 import { ComponentLoaderService } from '../../../services/loader.service';
 import { ComponentHostDirective } from '../../../directives/component-host.directive';
 import { ToastModule } from 'primeng/toast';
+import { LoaderComponent } from "../../../components/loader/loader.component";
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, TopBarComponent, SidebarComponent, RouterModule, ComponentHostDirective, ToastModule],
+  imports: [CommonModule, TopBarComponent, SidebarComponent, RouterModule, ComponentHostDirective, ToastModule, LoaderComponent],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })

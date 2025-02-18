@@ -28,15 +28,15 @@ export class PrimaNotaComponent {
     title: 'Prima Nota',
     addButtonText: 'Aggiungi Operazione',
     columns: [
-      { field: 'id', header: 'ID', filter: true, type: 'text' },
-      { field: 'dataOperazione', header: 'Data Operazione', filter: true, type: 'date' },
-      { field: 'nome', header: 'Nome', filter: true, type: 'text' },
-      { field: 'categoria.nome', header: 'Categoria', filter: true, type: 'text' },
-      { field: 'metodoPagamento.nome', header: 'Metodo di Pagamento', filter: true, type: 'text' },
-      { field: 'importo', header: 'Importo', filter: true, type: 'text' },
-      { field: 'tipoMovimento', header: 'Tipo Movimento', filter: true, type: 'custom', props: ["ENTRATA", "USCITA"] },
-      { field: 'fattura.numeroFattura', header: 'Fattura Associata', filter: true, type: 'text' },
-      { field: 'incaricoId', header: 'Incarico Associato', filter: true, type: 'text'}
+      { field: 'primaNota.id', header: 'ID', filter: true, type: 'text' },
+      { field: 'primaNota.dataOperazione', header: 'Data Operazione', filter: true, type: 'date' },
+      { field: 'primaNota.nome', header: 'Nome', filter: true, type: 'text' },
+      { field: 'primaNota.categoria.nome', header: 'Categoria', filter: true, type: 'text' },
+      { field: 'primaNota.metodoPagamento.nome', header: 'Metodo di Pagamento', filter: true, type: 'text' },
+      { field: 'primaNota.importo', header: 'Importo', filter: true, type: 'text' },
+      { field: 'primaNota.tipoMovimento', header: 'Tipo Movimento', filter: true, type: 'custom', props: ["ENTRATA", "USCITA"] },
+      { field: 'primaNota.fattura.numeroFattura', header: 'Fattura Associata', filter: true, type: 'text' },
+      { field: 'incarico.numero_ordine', header: 'Incarico Associato', filter: true, type: 'text'}
     ],
     actionButtons: [
       { name: 'delete', label: 'Elimina', icon: 'pi pi-trash', class: 'p-button-danger' },
@@ -53,14 +53,14 @@ export class PrimaNotaComponent {
           ),
           edit: (item: any) =>
             this._loaderService
-              .load(PrimaNotaAddDialog, item)
+              .load(PrimaNotaAddDialog, item.primaNota)
               .then(() => { 
                 this._primaNotaService.getPrimaNota().subscribe((data: PrimaNota[] | null) => { if (data) { this.primaNota = data; } })
                 this.loadDashboardData()
               }
               ),
     
-      delete: (item: { id: any; }) =>
+      delete: (item: { primaNota: any; }) =>
         this._loaderService
           .confirm({
             title: 'Vuoi davvero eliminare questa operazione?',
@@ -71,7 +71,7 @@ export class PrimaNotaComponent {
             mergeMap((result: any) => {
               if (result?.confirmed) {
                 this.loadDashboardData()
-                return this._primaNotaService.deletePrimaNota(item.id).pipe(
+                return this._primaNotaService.deletePrimaNota(item.primaNota.id).pipe(
                   mergeMap(() => this._primaNotaService.getPrimaNota())
                 );
               } else {

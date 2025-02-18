@@ -29,7 +29,7 @@ export class OrdiniComponent {
     title: 'Ordini',
     addButtonText: 'Aggiungi Ordine',
     columns: [
-      { field: 'id', header: 'ID' ,filter: true, type: 'text'},
+      { field: 'numero_ordine', header: 'Numero ordine' ,filter: true, type: 'text'},
       // Mostriamo il nome del cliente sfruttando la proprietà annidata 'cliente.nome'
       { field: 'cliente.nome', header: 'Cliente Nome',filter: true, type: 'text' },
       { field: 'cliente.cognome', header: 'Cliente Cognome',filter: true, type: 'text' },
