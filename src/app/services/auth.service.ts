@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environment/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +41,13 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token'); // Verifica se il token esiste
   }
+
+  public apiUrl : string = 'https://api.powerwebsoftware.it/api/user/profile-status';
+  isProfileCompleted(): Observable<boolean> {
+    return this._http.get<{ profileCompleted: boolean }>(this.apiUrl)
+      .pipe(map(response => response.profileCompleted));
+  }
+
 
   login(token: string) {
     localStorage.setItem('token', token);

@@ -38,7 +38,7 @@ export class PrimaNotaAddDialog extends ComponentDialog implements OnInit {
   importo: number = 0;
   tipoMovimento: TipoMovimento = TipoMovimento.ENTRATA;
   fattura?: Fattura;
-  incarico: Ordine;
+  incarico: number;
 
     @Input() data: any; // Se presente, significa che stiamo modificando l'ordine
     edit: boolean = false;
@@ -100,7 +100,7 @@ export class PrimaNotaAddDialog extends ComponentDialog implements OnInit {
               importo: this.importo,
               tipoMovimento: this.tipoMovimento,
               fattura: this.fattura,
-              incaricoId: this.incarico.id  
+              incaricoId: this.incarico  
             }).subscribe(() => {
               this.close();
             })
@@ -113,7 +113,7 @@ export class PrimaNotaAddDialog extends ComponentDialog implements OnInit {
               importo: this.importo,
               tipoMovimento: this.tipoMovimento,
               fattura: this.fattura,
-              incaricoId: this.incarico.id
+              incaricoId: this.incarico
             }).subscribe(() => {
               this.close();
             });

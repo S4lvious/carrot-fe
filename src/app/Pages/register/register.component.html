@@ -62,36 +62,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <h5>Dati personali</h5>
-                                    <div class="form-group" *ngFor="let field of ['username', 'password', 'nome', 'cognome', 'codiceFiscale']">
+                                    <div class="form-group" *ngFor="let field of ['email','password', 'nome', 'cognome']">
                                         <label>{{ field | titlecase }}</label>
                                         <input [type]="field === 'password' ? 'password' : 'text'" class="form-control" [(ngModel)]="userData[field]" name="{{ field }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <h5>Dati aziendali</h5>
-                                    <div class="form-group" *ngFor="let field of ['ragioneSociale', 'partitaIva', 'iban']">
-                                        <label>{{ field | titlecase }}</label>
-                                        <input type="text" class="form-control" [(ngModel)]="userData[field]" name="{{ field }}">
-                                    </div>
-                                </div>
                             </div>
                             <!-- Informazioni di contatto -->
-                            <div class="row mt-4">
-                                <div class="col-md-6">
-                                    <h5>Informazioni di contatto</h5>
-                                    <div class="form-group" *ngFor="let field of ['indirizzo', 'cap', 'citta', 'provincia']">
-                                        <label>{{ field | titlecase }}</label>
-                                        <input type="text" class="form-control" [(ngModel)]="userData[field]" name="{{ field }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5>Contatti</h5>
-                                    <div class="form-group" *ngFor="let field of ['email', 'pec', 'telefono']">
-                                        <label>{{ field | titlecase }}</label>
-                                        <input [type]="field.includes('email') ? 'email' : 'text'" class="form-control" [(ngModel)]="userData[field]" name="{{ field }}">
-                                    </div>
-                                </div>
-                            </div>
                             <p-toast [position]="'bottom-right'"></p-toast>
                             <div class="text-center mt-4">
                                 <p-button type="submit">Registrati</p-button>

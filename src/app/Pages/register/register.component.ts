@@ -48,7 +48,7 @@ export class RegisterComponent {
   constructor(private messageService: MessageService, private authService: AuthService) {}
 
   onSubmit() {
-    if (this.userData.username && this.userData.password && this.userData.email) {
+    if (this.userData.email && this.userData.password) {
       this.authService.sendRegister(this.userData).subscribe((data) => {
         this.messageService.add({ severity: 'success', summary: 'Successo', detail: data });
         

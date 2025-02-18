@@ -13,6 +13,7 @@ import { VerifyEmailComponent } from './Pages/verifcationEmail/verificationEmail
 import { RegisterComponent } from './Pages/register/register.component';
 import { EditUserComponent } from './Pages/user/user.component';
 import { CategorieMovimentoComponent } from './Pages/categorie-movimento/categorie-movimento.component';
+import { profileGuard } from './guards/profile.guard';
 
 export const routes: Routes = [
   {
@@ -20,14 +21,14 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
-      { path: 'prodotti', component: ProdottiComponent, canActivate: [authGuard] },
-      { path: 'ordini', component: OrdiniComponent, canActivate: [authGuard] },
-      { path: 'clienti', component: ClientiComponent, canActivate: [authGuard] },
-      { path: 'categorie', component: CategorieComponent, canActivate: [authGuard] },
-      { path: 'categorie-movimento', component: CategorieMovimentoComponent, canActivate: [authGuard] },
-      { path: 'fatture', component: FattureComponent, canActivate: [authGuard] },
-      { path: 'contabilita', component: PrimaNotaComponent, canActivate: [authGuard]},
+      { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard, profileGuard] },
+      { path: 'prodotti', component: ProdottiComponent, canActivate: [authGuard,  profileGuard] },
+      { path: 'ordini', component: OrdiniComponent, canActivate: [authGuard, profileGuard] },
+      { path: 'clienti', component: ClientiComponent, canActivate: [authGuard, profileGuard] },
+      { path: 'categorie', component: CategorieComponent, canActivate: [authGuard, profileGuard] },
+      { path: 'categorie-movimento', component: CategorieMovimentoComponent, canActivate: [authGuard,profileGuard] },
+      { path: 'fatture', component: FattureComponent, canActivate: [authGuard,profileGuard] },
+      { path: 'contabilita', component: PrimaNotaComponent, canActivate: [authGuard,profileGuard]},
       { path: 'utente', component: EditUserComponent, canActivate:[authGuard]}
 
     ]

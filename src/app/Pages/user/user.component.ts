@@ -7,6 +7,9 @@ import { PanelModule } from 'primeng/panel';
 import { TabViewModule } from 'primeng/tabview';
 import { UserService } from '../../services/user.service';
 import { CommonModule, DatePipe } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
     standalone:true,
@@ -48,15 +51,48 @@ export class EditUserComponent implements OnInit {
     createdAt: new Date()
   };
 
+  profileCompleted = true;
+  missingFields: string[] = [];
 
   plans: any = [
     "Annuale", "Trimestrale", "Mensile"
   ]
   constructor(
-    private userService: UserService
+    private userService: UserService, 
+    public authService: AuthService,
+    public router: Router
   ) {}
 
+  profileCompleted$!: Observable<boolean>;
+
+  public get getMissingFields(): string[] {
+    this.missingFields = [];
+    if (!this.user.partitaIva) this.missingFields.push('Partita IVA');
+    if (!this.user.codiceFiscale) this.missingFields.push('Codice Fiscale');
+    if (!this.user.indirizzo) this.missingFields.push('Indirizzo');
+    if (!this.user.cap) this.missingFields.push('CAP');
+    if (!this.user.citta) this.missingFields.push('Città');
+    if (!this.user.provincia) this.missingFields.push('Provincia');
+    if (!this.user.nome && !this.user.ragioneSociale) this.missingFields.push('Nome o Ragione Sociale');
+    return this.missingFields;
+  }
+  get isSaveDisabled(): boolean {
+    return (
+      !this.user.partitaIva ||
+      !this.user.codiceFiscale ||
+      !this.user.indirizzo ||
+      !this.user.cap ||
+      !this.user.citta ||
+      !this.user.provincia ||
+      (!this.user.nome && !this.user.ragioneSociale)
+    );
+  }
+    
+
+
+
   ngOnInit(): void {
+    this.profileCompleted$ = this.authService.isProfileCompleted();
     this.loadUser();
   }
 
@@ -78,12 +114,10 @@ export class EditUserComponent implements OnInit {
     }
 
   onSave(): void {
-    this.userService.updateUser(this.user).subscribe(() => {
+    this.userService.completeProfile(this.user).subscribe(() => {
         this.loadUser();
+        this.router.navigate(['dashboard']);
     })
 }
 
-  onCancel(): void {
-    this.loadUser(); // Ricarica i dati originali se l'utente annulla
-  }
 }

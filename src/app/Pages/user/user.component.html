@@ -1,18 +1,23 @@
 <div class="container mt-4">
+  <div *ngIf="!(profileCompleted$ | async)" class="alert alert-warning mt-3">
+    <strong>Attenzione!</strong> Il tuo profilo non è completo. Devi compilare i seguenti campi obbligatori:
+    <ul>
+      <li *ngFor="let campo of getMissingFields">{{ campo }}</li>
+    </ul>
+  </div>
+  
   <p-tabView>
-    
-    <!-- TAB GENERALI -->
     <p-tabPanel header="Generali">
       <div class="row">
         <div class="col-md-6">
           <p-panel header="Dati Anagrafici">
             <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
-              <input pInputText id="username" class="form-control" [(ngModel)]="user.username" required />
+              <label for="nome" class="form-label">Nome</label>
+              <input pInputText id="nome" class="form-control" [(ngModel)]="user.nome" required />
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input pInputText id="email" class="form-control" [(ngModel)]="user.email" required />
+              <label for="cognome" class="form-label">Cognome</label>
+              <input pInputText id="cognome" class="form-control" [(ngModel)]="user.cognome" />
             </div>
             <div class="mb-3">
               <label for="telefono" class="form-label">Telefono</label>
@@ -22,28 +27,77 @@
         </div>
 
         <div class="col-md-6">
-          <p-panel header="Indirizzo">
+          <p-panel header="Dati Aziendali">
             <div class="mb-3">
-              <label for="indirizzo" class="form-label">Indirizzo</label>
-              <input pInputText id="indirizzo" class="form-control" [(ngModel)]="user.indirizzo" required />
+              <label for="ragioneSociale" class="form-label">Ragione Sociale</label>
+              <input pInputText id="ragioneSociale" class="form-control" [(ngModel)]="user.ragioneSociale" />
             </div>
             <div class="mb-3">
-              <label for="citta" class="form-label">Città</label>
-              <input pInputText id="citta" class="form-control" [(ngModel)]="user.citta" required />
+              <label for="codiceFiscale" class="form-label">Codice Fiscale</label>
+              <input pInputText id="codiceFiscale" class="form-control" [(ngModel)]="user.codiceFiscale" required />
             </div>
             <div class="mb-3">
-              <label for="provincia" class="form-label">Provincia</label>
-              <input pInputText id="provincia" class="form-control" [(ngModel)]="user.provincia" required />
+              <label for="partitaIva" class="form-label">Partita IVA</label>
+              <input pInputText id="partitaIva" class="form-control" [(ngModel)]="user.partitaIva" />
+            </div>
+            <div class="mb-3">
+              <label for="pec" class="form-label">PEC</label>
+              <input pInputText id="pec" class="form-control" [(ngModel)]="user.pec" />
+            </div>
+            <div class="mb-3">
+              <label for="codiceDestinatario" class="form-label">Codice Destinatario</label>
+              <input pInputText id="codiceDestinatario" class="form-control" [(ngModel)]="user.codiceDestinatario" />
             </div>
           </p-panel>
         </div>
       </div>
     </p-tabPanel>
 
+    <!-- TAB INDIRIZZO -->
+    <p-tabPanel header="Indirizzo">
+      <p-panel header="Dati di Residenza / Sede">
+        <div class="mb-3">
+          <label for="indirizzo" class="form-label">Indirizzo</label>
+          <input pInputText id="indirizzo" class="form-control" [(ngModel)]="user.indirizzo" required />
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="cap" class="form-label">CAP</label>
+              <input pInputText id="cap" class="form-control" [(ngModel)]="user.cap" required />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="citta" class="form-label">Città</label>
+              <input pInputText id="citta" class="form-control" [(ngModel)]="user.citta" required />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="provincia" class="form-label">Provincia</label>
+              <input pInputText id="provincia" class="form-control" [(ngModel)]="user.provincia" required />
+            </div>
+          </div>
+        </div>
+      </p-panel>
+    </p-tabPanel>
+
+    <!-- TAB FINANZIARI -->
+    <p-tabPanel header="Finanziari">
+      <p-panel header="Dati Bancari">
+        <div class="mb-3">
+          <label for="iban" class="form-label">IBAN</label>
+          <input pInputText id="iban" class="form-control" [(ngModel)]="user.iban" />
+        </div>
+      </p-panel>
+    </p-tabPanel>
+
+    <!-- TAB ACCOUNT -->
     <!-- TAB SUBSCRIPTION -->
-    <p-tabPanel header="Subscription">
+    <p-tabPanel header="Abbonamento">
       <p-panel header="Dettagli Sottoscrizione">
-        <div *ngIf="user.subscription.trial; else activeSubscription">
+        <div *ngIf="user.subscription.isTrial; else activeSubscription"> 
           <p class="text-center fw-bold">Seleziona un piano per effettuare l'upgrade</p>
           <div class="row">
             <div class="col-md-4" *ngFor="let plan of plans">
@@ -71,8 +125,8 @@
   <!-- BOTTONI -->
   <p-card [style]="{'marginTop': '10px'}">
     <div class="d-flex justify-content-end mt-4">
-      <button pButton label="Annulla" class="me-2" (click)="onCancel()"></button>
-      <button pButton label="Salva" (click)="onSave()"></button>
+      <button pButton label="Annulla" class="me-2"></button>
+      <button pButton label="Salva" [disabled]="isSaveDisabled" (click)="onSave()"></button>
     </div>
   </p-card>
 </div>

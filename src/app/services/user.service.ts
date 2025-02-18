@@ -48,6 +48,10 @@ export class UserService {
         return this.http.put<User>(url, user);
     }
 
+    completeProfile(user: User) : Observable<string> {
+        return this.http.post(this.apiUrl+'/complete-profile', user, {responseType: 'text'});
+    }
+
     // Delete a user.
     deleteUser(id: string): Observable<any> {
         const url = `${this.apiUrl}/${id}`;
