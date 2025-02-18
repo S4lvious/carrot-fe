@@ -6,8 +6,12 @@
   flex-grow: 1;
   background-color: #f3f5f7;
   transition: margin-left 0.3s ease-in-out;
+  margin-left: 250px; /* Quando sidebar aperta */
+  width: calc(100% - 250px);
 }
 
-.sidebar.closed + .content {
-  margin-left: 80px;
+/* Quando la sidebar è chiusa */
+.content.sidebar-collapsed {
+  margin-left: 0px;
+  transition: margin-left 0.3s ease-in-out;
 }

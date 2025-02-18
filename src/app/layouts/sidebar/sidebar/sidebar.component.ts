@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
@@ -10,9 +10,11 @@ import { RouterLink, RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule],
 })
 export class SidebarComponent {
-  isCollapsed = false;
+  @Input() isCollapsed = false;
+  @Output() toggleSidebarEvent = new EventEmitter<void>();
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
+    this.toggleSidebarEvent.emit()
   }
 }

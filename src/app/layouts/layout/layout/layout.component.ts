@@ -7,6 +7,7 @@ import { ComponentLoaderService } from '../../../services/loader.service';
 import { ComponentHostDirective } from '../../../directives/component-host.directive';
 import { ToastModule } from 'primeng/toast';
 import { LoaderComponent } from "../../../components/loader/loader.component";
+
 @Component({
   selector: 'app-layout',
   standalone: true,
@@ -18,20 +19,17 @@ export class LayoutComponent {
   @ViewChild(ComponentHostDirective, { static: true })
   hostDirective!: ComponentHostDirective;
 
-  constructor(
-    private loaderService: ComponentLoaderService
-  ) {
+  sidebarCollapsed = false;
 
-  }
-  sidebarVisible = false;
+  constructor(private loaderService: ComponentLoaderService) {}
+  
+  
 
   ngOnInit() {
     this.loaderService.init(this.hostDirective);
   }
 
-
-
   toggleSidebar() {
-    this.sidebarVisible = !this.sidebarVisible;
+    this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 }

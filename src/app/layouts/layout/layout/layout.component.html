@@ -1,9 +1,9 @@
-<app-top-bar></app-top-bar>
+<app-top-bar class="top-bar" [sidebarChiusa]="sidebarCollapsed" [class.sidebar-collapsed]="!sidebarCollapsed"></app-top-bar>
 <div class="app-container">
   <ng-template componentHost></ng-template>
   <p-toast [position]="'bottom-right'"></p-toast>
-  <app-sidebar></app-sidebar>
-  <div class="content">
+  <app-sidebar (toggleSidebarEvent)="toggleSidebar()" [isCollapsed]="sidebarCollapsed"></app-sidebar>
+  <div class="content" [class.sidebar-collapsed]="sidebarCollapsed">
     <app-loader></app-loader>
     <router-outlet></router-outlet>
   </div>

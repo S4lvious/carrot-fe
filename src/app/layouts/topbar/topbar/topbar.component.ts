@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../../services/auth.service';
@@ -20,8 +20,7 @@ export class TopBarComponent {
 
   }
 
-  @Output() toggleSidebarEvent = new EventEmitter<void>();
-
+  @Input() sidebarChiusa: boolean
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
@@ -30,9 +29,5 @@ export class TopBarComponent {
 
   editUser() {
     this.router.navigate(['/utente'])
-  }
-
-  toggleSidebar() {
-    this.toggleSidebarEvent.emit();
   }
 }
