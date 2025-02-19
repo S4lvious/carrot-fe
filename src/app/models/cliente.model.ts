@@ -14,5 +14,8 @@ export interface Cliente {
     note?: string;
     dataUltimoOrdine?: string; // LocalDate in Java → string in TS
     isAzienda: boolean;
+    codiceSDI?: string
+    pec?:string
+    nazione?:string
   }
   

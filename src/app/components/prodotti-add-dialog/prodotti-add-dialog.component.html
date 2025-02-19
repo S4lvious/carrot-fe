@@ -1,6 +1,7 @@
-<ct-dialog [size]="'small'" [title]="'Inserisci prodotto'" [footerActions]="footerActions" class="product-dialog">
+<ct-dialog [size]="'small'" [title]="'Inserisci/Modifica Prodotto'" [footerActions]="footerActions" class="product-dialog">
+
   <!-- Pannello con i dati principali del prodotto -->
-  <p-panel header="Dettagli Prodotto" class="mb-3"  [style]="{'marginBottom': '10px'}">
+  <p-panel header="Dettagli Prodotto" class="mb-3">
     <div class="row">
       <div class="col-4 p-3">
         <ct-input [label]="'Nome'" [(ctModel)]="nome"></ct-input>
@@ -9,32 +10,116 @@
         <ct-input [label]="'Descrizione'" [(ctModel)]="descrizione"></ct-input>
       </div>
       <div class="col-4 p-3">
-        <ct-input [label]="'Prezzo'" [(ctModel)]="prezzo"></ct-input>
+        <ct-input [label]="'Prezzo'" [(ctModel)]="prezzo" type="number"></ct-input>
       </div>
     </div>
   </p-panel>
 
   <!-- Pannello per categoria, IVA e quantità -->
-  <p-panel header="Categorie e Dettagli" class="mb-3"  [style]="{'marginBottom': '10px'}">
+  <p-panel header="Categorie e Dettagli" class="mb-3">
     <div class="row">
       <div class="col-4 p-3">
-        <p-select placeholder="Seleziona categoria" [optionLabel]="'nome'" [options]="categoria" [(ngModel)]="selectedCategoria"></p-select>
+        <p-ifta-label>
+          <p-select
+            placeholder="Seleziona categoria"
+            [optionLabel]="'nome'"
+            [options]="categoria"
+            [(ngModel)]="selectedCategoria"
+          ></p-select>
+          <label>Categoria</label>
+        </p-ifta-label>
       </div>
       <div class="col-4 p-3">
-        <p-select placeholder="Seleziona IVA" [options]="[22,10,5,0]" [(ngModel)]="aliquotaIVA"></p-select>
+        <p-ifta-label>
+          <p-select
+            placeholder="Seleziona IVA"
+            [options]="[22,10,5,0]"
+            [(ngModel)]="aliquotaIVA"
+          ></p-select>
+          <label>Aliquota IVA (%)</label>
+        </p-ifta-label>
       </div>
       <div class="col-4 p-3">
-        <ct-input [disabled]="!esauribile" [label]="'Quantità'" [(ctModel)]="quantita"></ct-input>
+        <ct-input
+          [disabled]="!esauribile"
+          [label]="'Quantità'"
+          [(ctModel)]="quantita"
+          type="number"
+        ></ct-input>
       </div>
     </div>
   </p-panel>
 
-  <!-- Pannello per opzioni aggiuntive -->
-  <p-panel header="Opzioni" class="mb-3"  [style]="{'marginBottom': '10px'}">
+  <!-- Pannello per opzioni -->
+  <p-panel header="Opzioni" class="mb-3">
     <div class="row">
       <div class="col-4 p-3">
-        <ct-checkbox [(bmModel)]="esauribile" [label]="'Prodotto esauribile'" [background]="true"></ct-checkbox>
+        <ct-checkbox
+          [(bmModel)]="esauribile"
+          [label]="'Prodotto esauribile'"
+          [background]="true"
+        ></ct-checkbox>
       </div>
     </div>
   </p-panel>
+
+  <!-- Nuovo pannello per i campi di fatturazione elettronica -->
+  <p-panel header="Dati Fatturazione Elettronica" class="mb-3">
+    <div class="row">
+      <!-- CodiceTipo e CodiceValore -->
+      <div class="col-6 p-3">
+        <p-ifta-label>
+          <p-select
+            placeholder="Tipo Codice"
+            [options]="codiceTipoOptions"
+            [(ngModel)]="codiceTipo"
+          ></p-select>
+          <label>Codice Tipo</label>
+        </p-ifta-label>
+      </div>
+      <div class="col-6 p-3">
+        <ct-input
+          [label]="'Codice Valore'"
+          [(ctModel)]="codiceValore"
+        ></ct-input>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Unità di Misura -->
+      <div class="col-4 p-3">
+        <p-ifta-label>
+          <p-select
+            placeholder="U.Misura"
+            [options]="unitaMisuraOptions"
+            [(ngModel)]="unitaMisura"
+          ></p-select>
+          <label>Unità di Misura</label>
+        </p-ifta-label>
+      </div>
+      <!-- Natura -->
+      <div class="col-4 p-3">
+        <p-ifta-label>
+          <p-select
+            placeholder="Natura"
+            [options]="naturaOptions"
+            [(ngModel)]="natura"
+          ></p-select>
+          <label>Natura IVA</label>
+        </p-ifta-label>
+      </div>
+      <!-- Esigibilita IVA -->
+      <div class="col-4 p-3">
+        <p-ifta-label>
+          <p-select
+            placeholder="Esig.IVA"
+            [options]="esigibilitaIVAOptions"
+            [(ngModel)]="esigibilitaIVA"
+          ></p-select>
+          <label>Esigibilità IVA</label>
+        </p-ifta-label>
+      </div>
+    </div>
+  </p-panel>
+
 </ct-dialog>

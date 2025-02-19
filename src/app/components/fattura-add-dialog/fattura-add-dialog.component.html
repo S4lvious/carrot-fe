@@ -4,8 +4,8 @@
   [footerActions]="footerActions"
   class="fattura-dialog"
 >
-  <!-- Pannello per la Selezione Ordine -->
-  <p-panel header="Seleziona Ordine" class="mb-3"  [style]="{'marginBottom': '10px'}">
+  <!-- Selezione Ordine -->
+  <p-panel header="Seleziona Ordine" class="mb-3">
     <div class="row">
       <div class="col">
         <p-ifta-label>
@@ -17,55 +17,83 @@
             placeholder="Seleziona ordine"
             [options]="ordineSelect"
             (onChange)="selectionChange()"
-          >
-          </p-select>
+          ></p-select>
           <label>Seleziona ordine</label>
         </p-ifta-label>
       </div>
     </div>
   </p-panel>
 
-  <!-- Pannello con la tabella Dettagli Ordine -->
-  <p-panel header="Dettagli Ordine" [style]="{'marginBottom': '10px'}">
+  <!-- Dettagli Ordine -->
+  <p-panel header="Dettagli Ordine" class="mb-3">
+    <p-table [value]="orderDetails" class="p-datatable-striped p-datatable-gridlines">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Prodotto</th>
+          <th>Quantità</th>
+          <th>Prezzo Unitario</th>
+          <th>IVA</th>
+          <th>Totale No Iva</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-detail>
+        <tr>
+          <td>{{ detail.prodotto.nome }}</td>
+          <td>{{ detail.quantita }}</td>
+          <td>{{ detail.prezzoUnitario }}</td>
+          <td>{{ detail.prodotto.aliquotaIVA }}</td>
+          <td>{{ detail.prezzoUnitario * detail.quantita }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+
+  <!-- Tipo Documento / Causali -->
+  <p-panel header="Dettagli Documento" class="mb-3">
     <div class="row">
       <div class="col">
-        <p-table
-          [value]="orderDetails"
-          class="p-datatable-striped p-datatable-gridlines"
-        >
-          <ng-template pTemplate="header">
-            <tr>
-              <th>Prodotto</th>
-              <th>Quantità</th>
-              <th>Prezzo Unitario</th>
-              <th>IVA</th>
-              <th>Totale No Iva</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-detail let-i="rowIndex">
-            <tr>
-              <td>{{ detail.prodotto.nome }}</td>
-              <td>{{ detail.quantita }}</td>
-              <td>{{ detail.prezzoUnitario }}</td>
-              <td>{{ detail.prodotto.aliquotaIVA }}</td>
-              <td>{{ detail.prezzoUnitario * detail.quantita }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
+        <p-ifta-label>
+          <p-select
+            [(ngModel)]="tipoDocumento"
+            [options]="tipoDocumentoOptions"
+          ></p-select>
+          <label>Tipo Documento</label>
+        </p-ifta-label>
+      </div>
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'Causale'"
+            type="text"
+            [(ctModel)]="causale"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'Causale Pagamento'"
+            type="text"
+            [(ctModel)]="causalePagamento"
+          ></ct-input>
+        </p-ifta-label>
       </div>
     </div>
   </p-panel>
 
-  <!-- Pannello per la Ritenuta -->
-  <p-panel header="Ritenuta" class="mb-3" [style]="{'marginBottom': '10px'}">
+  <!-- Ritenuta -->
+  <p-panel header="Ritenuta" class="mb-3">
     <div class="row">
       <div class="col">
-        <ct-checkbox [label]="'Applica ritenuta'" [background]="true"  [(bmModel)]="applicareRitenuta"></ct-checkbox>
+        <ct-checkbox
+          [label]="'Applica ritenuta'"
+          [(bmModel)]="applicareRitenuta"
+        ></ct-checkbox>
       </div>
       <div class="col">
         <p-ifta-label>
-          <label>Ritenuta</label>
           <ct-input
+            [label]="'Aliquota Ritenuta (%)'"
             type="number"
             [disabled]="!applicareRitenuta"
             [(ctModel)]="ritenutaAcconto"
@@ -75,40 +103,204 @@
     </div>
   </p-panel>
 
-  <!-- Pannello per Data Scadenza e Stato -->
-  <p-panel header="Scadenza e Stato" class="mb-3" [style]="{'marginBottom': '10px'}">
+  <!-- Dati Bollo -->
+  <p-panel header="Bollo" class="mb-3">
+    <div class="row">
+      <div class="col">
+        <ct-checkbox
+          [label]="'Bollo Virtuale?'"
+          [(bmModel)]="datiBollo.bolloVirtuale"
+        ></ct-checkbox>
+      </div>
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'Importo Bollo'"
+            type="number"
+            [(ctModel)]="datiBollo.importoBollo"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+    </div>
+  </p-panel>
+
+  <!-- Cassa Previdenziale -->
+  <p-panel header="Cassa Previdenziale" class="mb-3">
+    <div class="row">
+      <div class="col">
+        <p-ifta-label>
+          <!-- Eventualmente usare p-select se hai opzioni predefinite come "TC01", "TC06", etc. -->
+          <ct-input
+            [placeholder]="'Tipo Cassa'"
+            type="text"
+            [(ctModel)]="datiCassa.tipoCassa"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'Aliquota (%)'"
+            type="text"
+            [(ctModel)]="datiCassa.alCassa"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'Contributo'"
+            type="number"
+            [(ctModel)]="datiCassa.importoContributoCassa"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'Imponibile'"
+            type="number"
+            [(ctModel)]="datiCassa.imponibileCassa"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'Aliquota IVA (%)'"
+            type="number"
+            [(ctModel)]="datiCassa.aliquotaIVACassa"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'Natura'"
+            type="text"
+            [(ctModel)]="datiCassa.natura"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+      <div class="col d-flex align-items-center">
+        <ct-checkbox
+          [label]="'Ritenuta su Cassa?'"
+          [(bmModel)]="datiCassa.ritenuta"
+        ></ct-checkbox>
+      </div>
+    </div>
+  </p-panel>
+
+  <!-- Dati Pagamento -->
+  <p-panel header="Dati Pagamento" class="mb-3">
+    <div class="row">
+      <div class="col-6">
+        <p-ifta-label>
+          <p-select
+            [(ngModel)]="datiPagamento.condizioniPagamento"
+            [options]="condizioniPagamentoOptions"
+          ></p-select>
+          <label>Condizioni Pagamento</label>
+        </p-ifta-label>
+      </div>
+      <div class="col-6">
+        <p-ifta-label>
+          <p-select
+            [(ngModel)]="datiPagamento.dettaglioPagamento.modalitaPagamento"
+            [options]="modalitaPagamentoOptions"
+          ></p-select>
+          <label>Modalità Pagamento</label>
+        </p-ifta-label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'Beneficiario'"
+            type="text"
+            [(ctModel)]="datiPagamento.dettaglioPagamento.beneficiario"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+      <div class="col">
+        <p-ifta-label>
+          <label>Data Scadenza Pag.</label>
+          <p-date-picker
+            [(ngModel)]="datiPagamento.dettaglioPagamento.dataScadenzaPagamento"
+          ></p-date-picker>
+        </p-ifta-label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'IBAN'"
+            type="text"
+            [(ctModel)]="datiPagamento.dettaglioPagamento.iban"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'Importo Pagamento'"
+            type="number"
+            [(ctModel)]="datiPagamento.dettaglioPagamento.importoPagamento"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+      <div class="col">
+        <p-ifta-label>
+          <ct-input
+            [placeholder]="'Istituto Finanziario'"
+            type="text"
+            [(ctModel)]="datiPagamento.dettaglioPagamento.istitutoFinanziario"
+          ></ct-input>
+        </p-ifta-label>
+      </div>
+    </div>
+  </p-panel>
+
+  <!-- Scadenza e Stato -->
+  <p-panel header="Scadenza e Stato" class="mb-3">
     <div class="row">
       <div class="col-6 p-3">
         <p-ifta-label>
+          <label>Data di scadenza Fattura</label>
           <p-date-picker [(ngModel)]="scadenza"></p-date-picker>
-          <label>Seleziona data di scadenza</label>
         </p-ifta-label>
       </div>
       <div class="col-6 p-3">
         <p-ifta-label>
-          <p-select [(ngModel)]="stato" [options]="['Pagata', 'Non pagata']">
-          </p-select>
+          <p-select [(ngModel)]="stato" [options]="statoOptions"></p-select>
           <label>Seleziona stato</label>
         </p-ifta-label>
       </div>
     </div>
   </p-panel>
 
-  <p-panel header="Ritenuta" class="mb-3" [style]="{'marginBottom': '10px'}">
+  <!-- Movimento -->
+  <p-panel header="Movimento in contabilità" class="mb-3">
     <div class="row">
       <div class="col">
-        <ct-checkbox [label]="'Genera movimento in contabilità'" [background]="true"  [(bmModel)]="generaMovimento"></ct-checkbox>
+        <ct-checkbox
+          [label]="'Genera movimento in contabilità'"
+          [background]="true"
+          [(bmModel)]="generaMovimento"
+        ></ct-checkbox>
       </div>
       <div class="col">
         <p style="color: gray;">
-          Genererai un movimento in entrata con il valore del totale dovuto della fattura.
-          La categoria del entrata sarà la categoria del primo prodotto venduto nella fattura.
-          Il metodo di pagamento sarà il primo che hai impostato.
-          Potrai cambiare le informazioni in seguito
+          Genererai un movimento in entrata con il valore del totale dovuto
+          della fattura. Potrai cambiare le informazioni in seguito.
         </p>
       </div>
     </div>
   </p-panel>
-  
 
 </ct-dialog>

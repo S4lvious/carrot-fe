@@ -49,8 +49,13 @@ export class FatturaService {
     }
 
     generateFattura(fatturaBody: fatturaDaOrdine): Observable<any> {
-        return this.http.post<any>(`${this.apiUrl}`, fatturaBody);
+      return this.http.post<any>(`${this.apiUrl}`, fatturaBody);
     }
+
+    generaFatturaCompleta(payload: any): Observable<any> {
+      return this.http.post<any>(`${this.apiUrl}`, payload);
+    }
+  
 
     deleteFattura(id: number): Observable<any> {
         return this.http.delete<any>(`${this.apiUrl}/${id}`);

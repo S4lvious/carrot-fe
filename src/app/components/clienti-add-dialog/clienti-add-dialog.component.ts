@@ -8,18 +8,20 @@ import { ClientiService } from '../../services/clienti.service';
 import { ComponentDialog } from '../../models/component-dialog';
 import { PanelModule } from 'primeng/panel';
 
-
 @Component({
     selector: 'app-clienti-add-dialog',
     standalone: true,
-    imports: [BmDialogComponent, PanelModule,InputTextModule, CtInputComponent],
+    imports: [BmDialogComponent, PanelModule, InputTextModule, CtInputComponent],
     templateUrl: 'clienti-add-dialog.component.html',
     styles: []
 })
 export class ClientiAddDialogComponent extends ComponentDialog {
 
-    @Input() data: Cliente;
+    @Input() data: Cliente; // se stiamo modificando un cliente esistente
+
     edit: boolean;
+
+    // Campi esistenti
     nome: string;
     cognome: string;
     email: string;
@@ -32,18 +34,22 @@ export class ClientiAddDialogComponent extends ComponentDialog {
     codiceFiscale: string;
     ragioneSociale: string;
 
+    // Nuovi campi
+    codiceSDI: string;
+    pec: string;
+    nazione: string;
 
     get isSaveDisabled(): boolean {
-        // Se è presente la ragione sociale, allora è valido solo se non ci sono né nome né cognome.
+        /*
+         * Se è presente la ragione sociale, allora è valido solo se non ci sono nome e cognome.
+         * Altrimenti, se non c'è ragione sociale, richiediamo entrambi: nome e cognome.
+         */
         if (this.ragioneSociale) {
-          return Boolean(this.nome || this.cognome); // Se c'è almeno un valore, disabilita.
+          return Boolean(this.nome || this.cognome); 
         } else {
-          // Se non è presente la ragione sociale, allora richiediamo che entrambi nome e cognome siano valorizzati.
           return (!this.nome || !this.cognome);
         }
-      }
-            
-
+    }
 
     get footerActions(): DialogFooterActions {
         return {
@@ -52,44 +58,54 @@ export class ClientiAddDialogComponent extends ComponentDialog {
                 label: 'Salva',
                 command: () => { 
                     if (this.edit) {
+                        // UPDATE
                         this.clienteService.updateClient({ 
-                                                id: this.data.id,
-                                                nome: this.nome,
-                                                cognome: this.cognome,
-                                                email: this.email,
-                                                telefono: this.telefono,
-                                                indirizzo: this.indirizzo,
-                                                cap: this.cap,
-                                                provincia: this.provincia,
-                                                citta: this.citta,
-                                                partitaIva: this.partitaIva === '' ? null : this.partitaIva,
-                                                codiceFiscale: this.codiceFiscale,
-                                                ragioneSociale: this.ragioneSociale,
-                                                isAzienda: this.data.isAzienda
-                                            }).subscribe(() => {
-                                                this.close()
-                                            })
+                            id: this.data.id,
+                            nome: this.nome,
+                            cognome: this.cognome,
+                            email: this.email,
+                            telefono: this.telefono,
+                            indirizzo: this.indirizzo,
+                            cap: this.cap,
+                            provincia: this.provincia,
+                            citta: this.citta,
+                            partitaIva: this.partitaIva === '' ? null : this.partitaIva,
+                            codiceFiscale: this.codiceFiscale,
+                            ragioneSociale: this.ragioneSociale,
+                            isAzienda: this.data.isAzienda,
+
+                            // Nuovi campi
+                            codiceSDI: this.codiceSDI,
+                            pec: this.pec,
+                            nazione: this.nazione
+                        }).subscribe(() => {
+                            this.close();
+                        });
                     } else {
-                        this.clienteService.createClient(
-                            {
-                                nome: this.nome,
-                                cognome: this.cognome,
-                                email: this.email,
-                                telefono: this.telefono,
-                                indirizzo: this.indirizzo,
-                                cap: this.cap,
-                                provincia: this.provincia,
-                                citta: this.citta,
-                                partitaIva: this.partitaIva === '' ? null : this.partitaIva,
-                                codiceFiscale: this.codiceFiscale,
-                                ragioneSociale: this.ragioneSociale,
-                                isAzienda: this.ragioneSociale ? true : false
-                            }
-                        ).subscribe(() => {
-                            this.close()
-                        })
+                        // CREATE
+                        this.clienteService.createClient({
+                            nome: this.nome,
+                            cognome: this.cognome,
+                            email: this.email,
+                            telefono: this.telefono,
+                            indirizzo: this.indirizzo,
+                            cap: this.cap,
+                            provincia: this.provincia,
+                            citta: this.citta,
+                            partitaIva: this.partitaIva === '' ? null : this.partitaIva,
+                            codiceFiscale: this.codiceFiscale,
+                            ragioneSociale: this.ragioneSociale,
+                            isAzienda: this.ragioneSociale ? true : false,
+
+                            // Nuovi campi
+                            codiceSDI: this.codiceSDI,
+                            pec: this.pec,
+                            nazione: this.nazione
+                        }).subscribe(() => {
+                            this.close();
+                        });
                     }
-                 }
+                }
             },
             secondary: {
                 label: 'Annulla',
@@ -97,8 +113,7 @@ export class ClientiAddDialogComponent extends ComponentDialog {
                     this.close();
                 }
             }
-    
-        }
+        };
     }
 
     constructor(
@@ -110,17 +125,23 @@ export class ClientiAddDialogComponent extends ComponentDialog {
     ngOnInit(){
         if (this.data) {
             this.edit = true;
-            this.nome = this.data?.nome!;
-            this.cognome = this.data?.cognome!;
-            this.email = this.data?.email!;
-            this.telefono = this.data?.telefono;
-            this.indirizzo = this.data?.indirizzo;
-            this.cap = this.data?.cap;
-            this.provincia = this.data?.provincia;
-            this.citta = this.data?.citta;
-            this.partitaIva = this.data?.partitaIva!;
-            this.codiceFiscale = this.data.codiceFiscale!;
-            this.ragioneSociale = this.data.ragioneSociale!;
+            this.nome = this.data?.nome ?? '';
+            this.cognome = this.data?.cognome ?? '';
+            this.email = this.data?.email ?? '';
+            this.telefono = this.data?.telefono ?? '';
+            this.indirizzo = this.data?.indirizzo ?? '';
+            this.cap = this.data?.cap ?? '';
+            this.provincia = this.data?.provincia ?? '';
+            this.citta = this.data?.citta ?? '';
+            this.partitaIva = this.data?.partitaIva ?? '';
+            this.codiceFiscale = this.data?.codiceFiscale ?? '';
+            this.ragioneSociale = this.data?.ragioneSociale ?? '';
+
+            // Inizializza i nuovi campi
+            this.codiceSDI = this.data?.codiceSDI ?? '';
+            this.pec = this.data?.pec ?? '';
+            this.nazione = this.data?.nazione ?? '';
+
         } else {
             this.edit = false;
             this.nome = '';
@@ -135,6 +156,10 @@ export class ClientiAddDialogComponent extends ComponentDialog {
             this.codiceFiscale = '';
             this.ragioneSociale = '';
 
+            // Nuovi campi
+            this.codiceSDI = '';
+            this.pec = '';
+            this.nazione = '';
         }
     }
 }

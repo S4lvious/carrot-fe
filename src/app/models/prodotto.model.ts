@@ -9,4 +9,5 @@ export interface Prodotto {
   aliquotaIVA: number; // BigDecimal → number in TS
   quantita: number;
   esauribile: boolean;
+  codiceTipo?: string
 }
