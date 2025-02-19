@@ -9,28 +9,39 @@
     </p-button>
   </div>
 
+  <!-- MultiSelect per scegliere colonne da visualizzare/nascondere -->
+  <div class="mb-4">
+    <p-multiSelect
+      [options]="config.columns"
+      [(ngModel)]="selectedColumns"
+      optionLabel="header"
+      [showToggleAll]="true"
+      defaultLabel="Seleziona Colonne">
+    </p-multiSelect>
+  </div>
+
   <!-- p-table con filtro globale e per colonna -->
   <p-table
     #dt
     stripedRows
-    *ngIf="_data.length > 0"
+    *ngIf="_data && _data.length > 0"
     [value]="_data"
     [paginator]="true"
     [rows]="5"
     [globalFilterFields]="globalFilterFields"
     responsiveLayout="scroll"
+    [columns]="selectedColumns"
   >
-        
     <!-- Header con due righe: intestazioni e filtri per colonna -->
-    <ng-template pTemplate="header">
+    <ng-template pTemplate="header" let-columns>
       <!-- Prima riga: intestazioni -->
       <tr>
-        <th *ngFor="let col of config.columns">{{ col.header }}</th>
+        <th *ngFor="let col of columns">{{ col.header }}</th>
         <th>Azioni</th>
       </tr>
       <!-- Seconda riga: filtri per colonna (solo se abilitati) -->
       <tr>
-        <th *ngFor="let col of config.columns">
+        <th *ngFor="let col of columns">
           <ng-container *ngIf="col.filter">
             <ng-container [ngSwitch]="col.type">
               <!-- Filtro per campo testuale -->
@@ -39,7 +50,7 @@
                   pInputText
                   type="text"
                   (input)="onColumnFilter($event, col)"
-                  placeholder="Filtra {{ col.header }}"
+                  [placeholder]="'Filtra ' + col.header"
                 />
               </ng-container>
               <!-- Filtro per campo booleano -->
@@ -47,25 +58,25 @@
                 <p-select
                   [options]="booleanOptions"
                   (onChange)="onColumnFilter($event, col)"
-                  placeholder="Filtra {{ col.header }}"
+                  [placeholder]="'Filtra ' + col.header"
                   [showClear]="true"
                 ></p-select>
               </ng-container>
-              <!-- Filtro per campo data -->
+              <!-- Filtro per campo custom (dropdown) -->
               <ng-container *ngSwitchCase="'custom'">
                 <p-select
                   [options]="getCustomOptions(col.props)"
                   (onChange)="onColumnFilter($event, col)"
-                  placeholder="Filtra {{ col.header }}"
+                  [placeholder]="'Filtra ' + col.header"
                   [showClear]="true"
                 ></p-select>
               </ng-container>
-
+              <!-- Filtro per campo data -->
               <ng-container *ngSwitchCase="'date'">
                 <p-datePicker
                   dateFormat="dd/mm/yy"
                   (onSelect)="onColumnFilter($event, col)"
-                  placeholder="Filtra {{ col.header }}"
+                  [placeholder]="'Filtra ' + col.header"
                 ></p-datePicker>
               </ng-container>
               <!-- Fallback: filtro testuale -->
@@ -74,7 +85,7 @@
                   pInputText
                   type="text"
                   (input)="onColumnFilter($event, col)"
-                  placeholder="Filtra {{ col.header }}"
+                  [placeholder]="'Filtra ' + col.header"
                 />
               </ng-container>
             </ng-container>
@@ -85,10 +96,10 @@
     </ng-template>
 
     <!-- Corpo della tabella -->
-    <ng-template pTemplate="body" let-item>
+    <ng-template pTemplate="body" let-item let-columns="columns">
       <tr>
-        <td *ngFor="let col of config.columns">
-          <!-- Per colonne di tipo booleano mostriamo un'icona -->
+        <td *ngFor="let col of columns">
+          <!-- Se booleano mostriamo un'icona -->
           <ng-container *ngIf="col.type === 'boolean'; else defaultValue">
             <p-button 
               [rounded]="true"
@@ -98,7 +109,7 @@
               [icon]="getNestedValue(item, col.field) ? 'pi pi-check' : 'pi pi-times'">
             </p-button>
           </ng-container>
-          <!-- Per gli altri tipi mostriamo il valore -->
+          <!-- Fallback: mostriamo il valore -->
           <ng-template #defaultValue>
             {{ getNestedValue(item, col.field) || '' }}
           </ng-template>

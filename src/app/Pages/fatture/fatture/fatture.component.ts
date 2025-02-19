@@ -19,10 +19,28 @@ export class FattureComponent {
   public config: CrudTableConfig = {
     title: 'Fatture',
     addButtonText: 'Aggiungi fattura',
+    defaultSelected:[
+      'numeroFattura',
+      'SdiMessaggio',
+      'ordine.numeroOrdine',
+      'dataEmissione',
+      'totaleNetto',
+      'totaleIVA',
+      'totaleLordo',
+      'totaleDovuto',
+      'stato',
+      'dataScadenza',
+      'sdiIdentificativo',
+      'sdiStato',
+      'nomeCliente',
+      'partitaIVACliente',
+      'nomeEmittente',
+      'partitaIVAEmittente'
+    ],
     columns: [
       //CAMPI ADE
       { field: 'sdiIdentificativo', header: 'Identificativo SDI', filter: true, type: 'text' },
-      { field: 'SdiStato', header: 'Stato SDI', filter: true, type: 'text' },
+      { field: 'sdiStato', header: 'Stato SDI', filter: true, type: 'text' },
       { field: 'SdiMessaggio', header: 'Messaggio SDI', filter: true, type: 'text' },
 
 

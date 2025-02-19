@@ -4,6 +4,7 @@ export interface CrudTableConfig {
     columns: ColumnConfig[];
     actionButtons: { name: string, label: string, icon: string, class: string }[];
     actions: { [key: string]: (item: any) => void };
+    defaultSelected?: string[]
 }
 
 export type ColType = 'text' | 'boolean' | 'date' | 'custom';
