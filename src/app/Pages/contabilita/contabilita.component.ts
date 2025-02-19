@@ -36,7 +36,7 @@ export class PrimaNotaComponent {
       { field: 'primaNota.importo', header: 'Importo', filter: true, type: 'text' },
       { field: 'primaNota.tipoMovimento', header: 'Tipo Movimento', filter: true, type: 'custom', props: ["ENTRATA", "USCITA"] },
       { field: 'primaNota.fattura.numeroFattura', header: 'Fattura Associata', filter: true, type: 'text' },
-      { field: 'incarico.numero_ordine', header: 'Incarico Associato', filter: true, type: 'text'}
+      { field: 'incarico.numeroOrdine', header: 'Incarico Associato', filter: true, type: 'text'}
     ],
     actionButtons: [
       { name: 'delete', label: 'Elimina', icon: 'pi pi-trash', class: 'p-button-danger' },

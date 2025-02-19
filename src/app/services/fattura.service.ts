@@ -53,7 +53,7 @@ export class FatturaService {
     }
 
     generaFatturaCompleta(payload: any): Observable<any> {
-      return this.http.post<any>(`${this.apiUrl}`, payload);
+      return this.http.post<any>(`${this.apiUrl + '/genera'}`, payload);
     }
   
 

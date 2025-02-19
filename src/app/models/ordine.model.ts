@@ -3,7 +3,7 @@ import { DettaglioOrdine } from './dettaglio-ordine.model';
 
 export interface Ordine {
   id?: number;
-  numero_ordine: string;
+  numeroOrdine: string;
   cliente: Cliente;
   dataOrdine: string; // LocalDateTime in Java → string in TS (ISO format)
   totale: number; // BigDecimal in Java → number in TS
