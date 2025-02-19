@@ -1,10 +1,5 @@
 
 .input-container{
-    label{
-        display: block;
-        margin-bottom: 4px;
-    }
-
     input, .view-only-container{
         width: 100%;
         padding: 14px 12px;
@@ -27,8 +22,6 @@
     }
     
     & > span{
-        position: relative;
-
         bm-icon{
             position: absolute;
             top: calc(50% - 9px);
@@ -95,18 +88,9 @@
                 flex: 1;
             }
         }
-
-        & > span {
-            display: none
-        }
     }
 
     &.small {
-        label {
-            display: block;
-            margin-bottom: 4px;
-        }
-    
         input {
             padding: 4px 6px;
             border-radius: 2px;

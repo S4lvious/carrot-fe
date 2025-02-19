@@ -5,7 +5,7 @@
   class="fattura-dialog"
 >
   <!-- Selezione Ordine -->
-  <p-panel header="Seleziona Ordine" class="mb-3">
+  <p-panel header="Seleziona Ordine" [style]="{marginBottom: '10px'}">
     <div class="row">
       <div class="col">
         <p-ifta-label>
@@ -25,7 +25,7 @@
   </p-panel>
 
   <!-- Dettagli Ordine -->
-  <p-panel header="Dettagli Ordine" class="mb-3">
+  <p-panel header="Dettagli Ordine" [style]="{marginBottom: '10px'}">
     <p-table [value]="orderDetails" class="p-datatable-striped p-datatable-gridlines">
       <ng-template pTemplate="header">
         <tr>
@@ -49,7 +49,7 @@
   </p-panel>
 
   <!-- Tipo Documento / Causali -->
-  <p-panel header="Dettagli Documento" class="mb-3">
+  <p-panel header="Dettagli Documento" [style]="{marginBottom: '10px'}">
     <div class="row">
       <div class="col">
         <p-ifta-label>
@@ -82,10 +82,11 @@
   </p-panel>
 
   <!-- Ritenuta -->
-  <p-panel header="Ritenuta" class="mb-3">
+  <p-panel header="Ritenuta" [style]="{marginBottom: '10px'}">
     <div class="row">
       <div class="col">
         <ct-checkbox
+          [background]="true"
           [label]="'Applica ritenuta'"
           [(bmModel)]="applicareRitenuta"
         ></ct-checkbox>
@@ -93,7 +94,7 @@
       <div class="col">
         <p-ifta-label>
           <ct-input
-            [label]="'Aliquota Ritenuta (%)'"
+            label="Aliquota Ritenuta (%)"
             type="number"
             [disabled]="!applicareRitenuta"
             [(ctModel)]="ritenutaAcconto"
@@ -104,10 +105,11 @@
   </p-panel>
 
   <!-- Dati Bollo -->
-  <p-panel header="Bollo" class="mb-3">
+  <p-panel header="Bollo" [style]="{marginBottom: '10px'}">
     <div class="row">
       <div class="col">
         <ct-checkbox
+          [background]="true"
           [label]="'Bollo Virtuale?'"
           [(bmModel)]="datiBollo.bolloVirtuale"
         ></ct-checkbox>
@@ -115,6 +117,7 @@
       <div class="col">
         <p-ifta-label>
           <ct-input
+            [label]="'Importo bollo'"
             [placeholder]="'Importo Bollo'"
             type="number"
             [(ctModel)]="datiBollo.importoBollo"
@@ -125,13 +128,13 @@
   </p-panel>
 
   <!-- Cassa Previdenziale -->
-  <p-panel header="Cassa Previdenziale" class="mb-3">
+  <p-panel header="Cassa Previdenziale" [style]="{marginBottom: '10px'}">
     <div class="row">
       <div class="col">
         <p-ifta-label>
           <!-- Eventualmente usare p-select se hai opzioni predefinite come "TC01", "TC06", etc. -->
           <ct-input
-            [placeholder]="'Tipo Cassa'"
+            [label]="'Tipo Cassa'"
             type="text"
             [(ctModel)]="datiCassa.tipoCassa"
           ></ct-input>
@@ -140,7 +143,7 @@
       <div class="col">
         <p-ifta-label>
           <ct-input
-            [placeholder]="'Aliquota (%)'"
+            [label]="'Aliquota (%)'"
             type="text"
             [(ctModel)]="datiCassa.alCassa"
           ></ct-input>
@@ -149,7 +152,7 @@
       <div class="col">
         <p-ifta-label>
           <ct-input
-            [placeholder]="'Contributo'"
+            [label]="'Contributo'"
             type="number"
             [(ctModel)]="datiCassa.importoContributoCassa"
           ></ct-input>
@@ -161,7 +164,7 @@
       <div class="col">
         <p-ifta-label>
           <ct-input
-            [placeholder]="'Imponibile'"
+            [label]="'Imponibile'"
             type="number"
             [(ctModel)]="datiCassa.imponibileCassa"
           ></ct-input>
@@ -170,7 +173,7 @@
       <div class="col">
         <p-ifta-label>
           <ct-input
-            [placeholder]="'Aliquota IVA (%)'"
+            [label]="'Aliquota IVA (%)'"
             type="number"
             [(ctModel)]="datiCassa.aliquotaIVACassa"
           ></ct-input>
@@ -179,7 +182,7 @@
       <div class="col">
         <p-ifta-label>
           <ct-input
-            [placeholder]="'Natura'"
+            [label]="'Natura'"
             type="text"
             [(ctModel)]="datiCassa.natura"
           ></ct-input>
@@ -187,6 +190,7 @@
       </div>
       <div class="col d-flex align-items-center">
         <ct-checkbox
+          [background]="true"
           [label]="'Ritenuta su Cassa?'"
           [(bmModel)]="datiCassa.ritenuta"
         ></ct-checkbox>
@@ -195,7 +199,7 @@
   </p-panel>
 
   <!-- Dati Pagamento -->
-  <p-panel header="Dati Pagamento" class="mb-3">
+  <p-panel header="Dati Pagamento" [style]="{marginBottom: '10px'}">
     <div class="row">
       <div class="col-6">
         <p-ifta-label>
@@ -220,7 +224,7 @@
       <div class="col">
         <p-ifta-label>
           <ct-input
-            [placeholder]="'Beneficiario'"
+            [label]="'Beneficiario'"
             type="text"
             [(ctModel)]="datiPagamento.dettaglioPagamento.beneficiario"
           ></ct-input>
@@ -228,10 +232,10 @@
       </div>
       <div class="col">
         <p-ifta-label>
-          <label>Data Scadenza Pag.</label>
           <p-date-picker
             [(ngModel)]="datiPagamento.dettaglioPagamento.dataScadenzaPagamento"
           ></p-date-picker>
+          <label>Data Scadenza Pag.</label>
         </p-ifta-label>
       </div>
     </div>
@@ -239,7 +243,7 @@
       <div class="col">
         <p-ifta-label>
           <ct-input
-            [placeholder]="'IBAN'"
+            [label]="'IBAN'"
             type="text"
             [(ctModel)]="datiPagamento.dettaglioPagamento.iban"
           ></ct-input>
@@ -248,7 +252,7 @@
       <div class="col">
         <p-ifta-label>
           <ct-input
-            [placeholder]="'Importo Pagamento'"
+            [label]="'Importo Pagamento'"
             type="number"
             [(ctModel)]="datiPagamento.dettaglioPagamento.importoPagamento"
           ></ct-input>
@@ -257,7 +261,7 @@
       <div class="col">
         <p-ifta-label>
           <ct-input
-            [placeholder]="'Istituto Finanziario'"
+            [label]="'Istituto Finanziario'"
             type="text"
             [(ctModel)]="datiPagamento.dettaglioPagamento.istitutoFinanziario"
           ></ct-input>
@@ -267,12 +271,12 @@
   </p-panel>
 
   <!-- Scadenza e Stato -->
-  <p-panel header="Scadenza e Stato" class="mb-3">
+  <p-panel header="Scadenza e Stato" [style]="{marginBottom: '10px'}">
     <div class="row">
       <div class="col-6 p-3">
         <p-ifta-label>
-          <label>Data di scadenza Fattura</label>
           <p-date-picker [(ngModel)]="scadenza"></p-date-picker>
+          <label>Data di scadenza Fattura</label>
         </p-ifta-label>
       </div>
       <div class="col-6 p-3">
@@ -285,7 +289,7 @@
   </p-panel>
 
   <!-- Movimento -->
-  <p-panel header="Movimento in contabilità" class="mb-3">
+  <p-panel header="Movimento in contabilità" [style]="{marginBottom: '10px'}">
     <div class="row">
       <div class="col">
         <ct-checkbox

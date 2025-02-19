@@ -19,6 +19,7 @@ import { Select } from 'primeng/select';
 import { IftaLabel } from 'primeng/iftalabel';
 import { CtInputComponent } from '../input/input.component';
 import { FormsModule } from '@angular/forms';
+import { DatePicker } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-fattura-add-by-ordine',
@@ -30,7 +31,7 @@ import { FormsModule } from '@angular/forms';
     IftaLabel,
     CtInputComponent,
     FormsModule,
-    
+    DatePicker,
     BmDialogComponent,
     // ... i moduli di UI (panel, datepicker, select, etc.)
   ],

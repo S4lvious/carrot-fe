@@ -31,15 +31,7 @@ export class FatturaService {
 
 
       generaXml(fattura: any) {
-        this.http.post(this.apiUrl + '/generaxml', fattura, { responseType: 'blob' })
-          .subscribe(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'fattura.xml';
-            a.click();
-            window.URL.revokeObjectURL(url);
-          });
+        return this.http.post<any>(`${this.apiUrl}/send`, fattura);
       }
 
       

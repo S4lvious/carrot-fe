@@ -11,7 +11,7 @@
       <div class="col-4">
         <p-ifta-label>
           <p-select
-            placeholder="Tipo Documento"
+            label="Tipo Documento"
             [options]="tipoDocumentoOptions"
             [(ngModel)]="tipoDocumento"
           ></p-select>
@@ -247,10 +247,8 @@
       </div>
       <div class="col-8">
         <p class="text-muted" style="font-size: 0.9rem;">
-          Genererai un movimento in entrata con il valore del totale dovuto.
-          La categoria dell'entrata sarà quella del primo prodotto venduto
-          nella fattura e il metodo di pagamento il primo impostato.
-          Potrai modificare queste informazioni in seguito.
+          Genererai un movimento in entrata con il valore del totale dovuto
+          della fattura. Potrai cambiare le informazioni in seguito.
         </p>
       </div>
     </div>

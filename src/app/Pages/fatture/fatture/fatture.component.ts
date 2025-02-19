@@ -20,6 +20,13 @@ export class FattureComponent {
     title: 'Fatture',
     addButtonText: 'Aggiungi fattura',
     columns: [
+      //CAMPI ADE
+      { field: 'sdiIdentificativo', header: 'Identificativo SDI', filter: true, type: 'text' },
+      { field: 'SdiStato', header: 'Stato SDI', filter: true, type: 'text' },
+      { field: 'SdiMessaggio', header: 'Identificativo SDI', filter: true, type: 'text' },
+
+
+
       // Campi principali già esistenti
       { field: 'numeroFattura', header: 'Numero Fattura', filter: true, type: 'text' },
       { field: 'ordine.numeroOrdine', header: 'Ordine Nr.', filter: true, type: 'text' },
@@ -88,7 +95,7 @@ export class FattureComponent {
     ],
     actionButtons: [
       { name: 'generatePDF', label: 'Genera PDF', icon: 'pi pi-file', class: 'p-button-success' },
-      { name: "generateXml", label: 'Genera XML', icon: 'pi pi-file', class: 'p-button-success' },
+      { name: "generateXml", label: 'Invia in cloud', icon: 'pi pi-file', class: 'p-button-success' },
       { name: 'delete', label: 'Elimina', icon: 'pi pi-trash', class: 'p-button-danger' }
     ],
     actions: {

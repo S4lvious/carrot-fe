@@ -66,6 +66,11 @@ export class ProdottiAddDialogComponent extends ComponentDialog {
   }
 
   ngOnInit() {
+    this.categorieService.getCategories().subscribe((cats) => {
+      this.categoria = cats;
+      // Se selectedCategoria ha un id, potresti reimpostarlo
+    });
+
     // Se stiamo modificando un prodotto esistente, i campi ci vengono passati in `data`
     if (this.data) {
       const prod: any = this.data;
@@ -87,10 +92,6 @@ export class ProdottiAddDialogComponent extends ComponentDialog {
     }
 
     // Carica la lista categorie
-    this.categorieService.getCategories().subscribe((cats) => {
-      this.categoria = cats;
-      // Se selectedCategoria ha un id, potresti reimpostarlo
-    });
   }
 
   get footerActions(): DialogFooterActions {
@@ -126,7 +127,7 @@ export class ProdottiAddDialogComponent extends ComponentDialog {
 
     // Decide se creare o aggiornare
     if (!this.id) {
-      // Creazione
+      delete prodottoToSave.id;
       this.prodottiService.createProduct(prodottoToSave).subscribe(() => {
         this.close();
       });
