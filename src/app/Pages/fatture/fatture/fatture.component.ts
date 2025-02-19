@@ -23,7 +23,7 @@ export class FattureComponent {
       //CAMPI ADE
       { field: 'sdiIdentificativo', header: 'Identificativo SDI', filter: true, type: 'text' },
       { field: 'SdiStato', header: 'Stato SDI', filter: true, type: 'text' },
-      { field: 'SdiMessaggio', header: 'Identificativo SDI', filter: true, type: 'text' },
+      { field: 'SdiMessaggio', header: 'Messaggio SDI', filter: true, type: 'text' },
 
 
 
@@ -108,7 +108,7 @@ export class FattureComponent {
       generatePDF: (item) =>
         this._fattureService.generaPdf(item),
       generateXml: (item) =>
-        this._fattureService.generaXml(item),
+        this._fattureService.generaXml(item).subscribe(),
       delete: (item) =>
         this._loaderService
           .confirm({
