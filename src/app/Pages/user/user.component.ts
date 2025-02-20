@@ -10,6 +10,8 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { BankDataService } from '../../services/bankdata.service';
+import { environment } from '../../../environment/environment';
 
 @Component({
     standalone:true,
@@ -53,6 +55,9 @@ export class EditUserComponent implements OnInit {
 
   profileCompleted = true;
   missingFields: string[] = [];
+  bankAccounts: any[] = [];
+  bankFilter: string = '';
+  
 
   plans: any = [
     "Annuale", "Trimestrale", "Mensile"
@@ -60,7 +65,8 @@ export class EditUserComponent implements OnInit {
   constructor(
     private userService: UserService, 
     public authService: AuthService,
-    public router: Router
+    public router: Router,
+    public bankDataService: BankDataService
   ) {}
 
   profileCompleted$!: Observable<boolean>;
@@ -87,10 +93,37 @@ export class EditUserComponent implements OnInit {
       (!this.user.nome && !this.user.ragioneSociale)
     );
   }
+
+  loadBankAccounts(): void {
+    this.bankDataService.getInstitutions("IT").subscribe({
+      next: (accounts) => {
+        this.bankAccounts = accounts;
+      },
+      error: (err) => {
+        console.error("Errore nel caricamento dei conti bancari", err);
+      }
+    });
+  }
+
+  configureBank(bank: any) {
+    this.bankDataService.createRequisition({
+      redirectUrl: environment.apiUrl + '/bank/redirect',
+      institutionId: bank.id,
+      reference: Math.random().toString().replace("0.", ""),
+      userLanguage: 'IT'
+    }).subscribe((res) => {
+      window.location.href = res.link;
+    });
+  }
+
+  onFilterChange(): void {
+    this.bankAccounts = this.bankAccounts.filter(bank =>
+      bank.name.toLowerCase().includes(this.bankFilter.toLowerCase())
+    );
+  }
+
+
     
-
-
-
   ngOnInit(): void {
     this.profileCompleted$ = this.authService.isProfileCompleted();
     this.loadUser();

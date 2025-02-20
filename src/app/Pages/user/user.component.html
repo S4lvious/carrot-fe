@@ -93,8 +93,60 @@
       </p-panel>
     </p-tabPanel>
 
-    <!-- TAB ACCOUNT -->
-    <!-- TAB SUBSCRIPTION -->
+    <!-- TAB CONTI BANCARI -->
+    <p-tabPanel header="Conti Bancari">
+      <p-panel header="Gestione Conti Bancari">
+        
+        <!-- Sezione per visualizzare le banche disponibili da configurare -->
+        <div *ngIf="bankAccounts && bankAccounts.length > 0; else noAvailableBanks">
+          <div class="bank-filter mb-3">
+            <!-- Campo per filtrare le banche per nome -->
+            <input pInputText 
+                   type="text" 
+                   placeholder="Filtra per nome banca..." 
+                   [(ngModel)]="bankFilter" 
+                   (ngModelChange)="onFilterChange()" 
+                   class="form-control" />
+          </div>
+          <div class="bank-list">
+            <div *ngFor="let bank of bankAccounts" class="bank-layer d-flex align-items-center p-2 border-bottom">
+              <!-- Logo banca -->
+              <img [src]="bank.logo" alt="{{ bank.name }}" width="50" height="50" class="me-3" />
+              <!-- Nome banca -->
+              <span class="bank-name flex-grow-1">{{ bank.name }}</span>
+              <!-- Pulsante Configura -->
+              <button pButton label="Configura" class="p-button-secondary" (click)="configureBank(bank)"></button>
+            </div>
+          </div>
+        </div>
+        <ng-template #noAvailableBanks>
+          <p>Nessuna banca disponibile per la configurazione.</p>
+        </ng-template>
+        
+        <!-- Sezione per visualizzare i conti bancari già aggiunti dall'utente -->
+        <div *ngIf="user?.bankAccounts && user.bankAccounts.length > 0" class="mt-4">
+          <h5>I tuoi conti bancari:</h5>
+          <div class="bank-list">
+            <div *ngFor="let account of user.bankAccounts" class="bank-layer d-flex align-items-center p-2 border-bottom">
+              <!-- Logo (se disponibile) o immagine di default -->
+              <img [src]="account.logo || 'img/carota_logo_transparente-removebg-preview.png'" alt="{{ account.accountName }}" width="50" height="50" class="me-3" />
+              <div class="flex-grow-1">
+                <p class="mb-0"><strong>{{ account.accountName }}</strong></p>
+                <small>IBAN: {{ account.iban }}</small>
+              </div>
+              <button pButton label="Configura" class="p-button-secondary" (click)="configureBank(account)"></button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Pulsante per aggiungere un nuovo conto bancario -->
+        <div class="mt-3 d-flex justify-content-end">
+          <button pButton label="Aggiungi Account Bancario" class="p-button-primary" (click)="loadBankAccounts()"></button>
+        </div>
+        
+      </p-panel>
+    </p-tabPanel>
+    <!-- TAB ABBONAMENTO -->
     <p-tabPanel header="Abbonamento">
       <p-panel header="Dettagli Sottoscrizione">
         <div *ngIf="user.subscription.isTrial; else activeSubscription"> 
