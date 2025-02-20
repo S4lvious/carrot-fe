@@ -41,4 +41,8 @@ export class BankDataService {
     return this.http.post<RequisitionResponse>(`${this.baseUrl}/requisition`, request);
   }
 
+  requestSync(accountId: string) : Observable<any> {
+    return this.http.post(this.baseUrl + 'syncData', {accountId});
+  }
+
 }

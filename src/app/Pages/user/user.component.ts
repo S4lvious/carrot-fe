@@ -122,6 +122,10 @@ export class EditUserComponent implements OnInit {
     );
   }
 
+  syncAccountTransaction(accountId: string): void {
+    this.bankDataService.requestSync(accountId).subscribe()
+  }
+
 
     
   ngOnInit(): void {

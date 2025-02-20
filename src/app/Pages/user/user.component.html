@@ -134,7 +134,7 @@
                 <p class="mb-0"><strong>{{ account.accountName }}</strong></p>
                 <small>IBAN: {{ account.iban }}</small>
               </div>
-              <button pButton label="Configura" class="p-button-secondary" (click)="configureBank(account)"></button>
+              <button pButton label="Sincronizza" class="p-button-secondary" (click)="syncAccountTransaction(account.bankAccountId)"></button>
             </div>
           </div>
         </div>
