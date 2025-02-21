@@ -54,7 +54,7 @@ import { OrdiniService } from '../../services/ordine.service';
         <ng-template pTemplate="body" let-doc>
           <tr>
             <td>{{ doc.nome }}</td>
-            <td>{{ doc.ordine?.id }}</td>
+            <td>{{ doc.ordine?.numeroOrdine }}</td>
             <td>
             <p-button
             [rounded]="true"

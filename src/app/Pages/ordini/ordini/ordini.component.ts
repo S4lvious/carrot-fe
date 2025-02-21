@@ -37,7 +37,7 @@ export class OrdiniComponent {
       { field: 'cliente.id', header: 'Cliente ID',filter: true, type: 'text' },
 
 
-      { field: 'dataOrdine', header: 'Data Ordine',filter: true, type: 'text' },
+      { field: 'dataOrdine', header: 'Data Ordine',filter: true, type: 'date' },
       { field: 'totale', header: 'Totale',filter: true, type: 'text' },
       { field: 'fatturato', header: 'Fatturato',filter: true, type: 'boolean' },
       { field: 'stato', header: 'Stato' ,filter: true, type: 'custom', props:["In corso", "Completo"]},

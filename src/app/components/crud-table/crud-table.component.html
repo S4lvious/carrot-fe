@@ -111,7 +111,7 @@
           </ng-container>
           <!-- Fallback: mostriamo il valore -->
           <ng-template #defaultValue>
-            {{ getNestedValue(item, col.field) || '' }}
+            {{ formatDate(getNestedValue(item, col.field)) || '' }}
           </ng-template>
         </td>
         <!-- Pulsante per il menu contestuale -->

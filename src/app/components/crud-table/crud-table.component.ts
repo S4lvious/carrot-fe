@@ -118,6 +118,19 @@ export class CrudTableComponent {
     { label: 'Falso', value: false }
   ];
 
+  formatDate(value: any): string {
+    if (!value) return '';
+    
+    // Controlla se è un formato ISO 8601
+    if (typeof value === 'string' && value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)) {
+      const date = new Date(value);
+      return date.toLocaleDateString('it-IT'); // Formato DD/MM/YYYY
+    }
+  
+    return value;
+  }
+  
+
   ngOnInit() {
     // Inizializza le colonne selezionate in base a defaultSelected
     if (!this.config.defaultSelected || this.config.defaultSelected.length === 0) {
