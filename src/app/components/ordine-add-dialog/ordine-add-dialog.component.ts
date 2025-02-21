@@ -18,6 +18,7 @@ import { ClientiService } from '../../services/clienti.service';
 import { TableModule } from 'primeng/table';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { PanelModule } from 'primeng/panel';
+import { DocumentoService } from '../../services/documento.service';
 interface DettaglioOrdineInput {
   id?: number;
   prodotto: Prodotto;
@@ -35,6 +36,7 @@ export class OrdiniAddDialogComponent extends ComponentDialog implements OnInit 
 
   @Input() data: any; // Se presente, significa che stiamo modificando l'ordine
   edit: boolean = false;
+  selectedFiles: File[] = [];
 
   // Campi per l'ordine
   selectedCliente: Cliente;
@@ -55,7 +57,7 @@ export class OrdiniAddDialogComponent extends ComponentDialog implements OnInit 
 
   // Flag per mostrare/nascondere la dialog
   display: boolean = true;
-
+  documenti: any[];
   public get calculateDisabled () {
     if (!this.selectedCliente) {
       return true;
@@ -67,7 +69,12 @@ export class OrdiniAddDialogComponent extends ComponentDialog implements OnInit 
     }
   }
 
-
+  onFileSelected(event: any): void {
+    if (event.target.files) {
+      this.selectedFiles = Array.from(event.target.files);
+    }
+  }
+  
   public get footerActions(): DialogFooterActions {
     return {
       primary: {
@@ -86,12 +93,11 @@ export class OrdiniAddDialogComponent extends ComponentDialog implements OnInit 
               prezzoUnitario: d.prezzoUnitario
             }))
           };
-  
-          if (this.edit) {
+        if (this.edit) {
             ordine.id = this.data.id;
-            this.ordiniService.updateOrdine(ordine).subscribe(() => this.close());
+            this.ordiniService.updateOrdine(ordine, this.selectedFiles).subscribe(() => this.close());
           } else {
-            this.ordiniService.createOrdine(ordine).subscribe(() => this.close());
+            this.ordiniService.createOrdine(ordine, this.selectedFiles).subscribe(() => this.close());
           }
         }
       },
@@ -102,17 +108,30 @@ export class OrdiniAddDialogComponent extends ComponentDialog implements OnInit 
   
     }
   } 
-  constructor(private ordiniService: OrdiniService, private productService: ProdottiService, private clienteService: ClientiService) {
+  constructor(private ordiniService: OrdiniService, private documentiService: DocumentoService ,private productService: ProdottiService, private clienteService: ClientiService) {
     super();
   }
 
+  visualizzaDocumento(percorso: string) {
+    this.documentiService.getSignedUrl(percorso).subscribe((response: any) => {
+      window.open(response.signedUrl, '_blank');
+    });
+  }
+
+  deleteDocument(id: number) {
+    this.documentiService.deleteDocument(id).subscribe();
+  }
+
+  
   ngOnInit() {
-    // Carica le liste dei clienti e dei prodotti (adattare ai metodi del tuo service)
     this.clienteService.getClients().subscribe(cli => this.clientiList = cli);
     this.productService.getProducts().subscribe(prod => this.prodottiList = prod);
     console.log(this.data)
     if (this.data) {
       this.edit = true;
+      this.documentiService.getDocumentiByOrdine(this.data.id).subscribe((docs) => {
+        this.documenti = docs;
+      })
       this.selectedCliente = this.data.cliente;
       this.dataOrdine = new Date(this.data.dataOrdine);
       this.fatturato = this.data.fatturato;

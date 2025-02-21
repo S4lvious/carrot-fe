@@ -34,7 +34,7 @@ export class ClientiComponent  {
       { field: 'codiceFiscale', header: 'Codice Fiscale', filter: true, type: 'text' },
       { field: 'ragioneSociale', header: 'Ragione Sociale', filter: true, type: 'text' },
       { field: 'dataUltimoOrdine', header: 'Ultimo ordine', filter: true, type: 'date' },
-      { field: 'azienda', header: 'Azienda', filter: true, type: 'boolean' },
+      { field: 'isAzienda', header: 'Azienda', filter: true, type: 'boolean' },
 
       // Nuovi campi
       { field: 'codiceSDI', header: 'Codice SDI', filter: true, type: 'text' },

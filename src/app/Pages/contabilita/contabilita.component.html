@@ -1,16 +1,34 @@
 <div class="container mt-4">
     <!-- Prima Riga: Grafici Principali -->
+    
+    <!-- Resto del template con i grafici -->
     <div class="row">
       <div class="col-md-6 mb-4">
         <p-card>
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <p-date-picker (ngModelChange)="loadDashboardData()" [(ngModel)]="selectedDataInizio" dateFormat="yy-mm-dd" placeholder="Data Inizio"></p-date-picker>
+            </div>
+            <div class="col-md-4">
+              <p-date-picker (ngModelChange)="loadDashboardData()" [(ngModel)]="selectedDataFine" dateFormat="yy-mm-dd" placeholder="Data Fine"></p-date-picker>
+            </div>
+            <div class="col-md-4">
+              <p-select type="number" (ngModelChange)="loadDashboardData()" [options]="[30,60,90,120,180,365]" [(ngModel)]="selectedRollingDays" placeholder="Rolling Days" class="form-control"> </p-select>
+            </div>
+          </div>      
           <ng-template pTemplate="title">Entrate VS Uscite</ng-template>
           <ng-template pTemplate="content">
             <p-chart type="pie" [data]="chartEntrateUscite" style="display: block; width:250px; height:250px;"></p-chart>
-        </ng-template>
+          </ng-template>
         </p-card>
       </div>
       <div class="col-md-6 mb-4">
         <p-card>
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <p-select type="number" [optionValue]="'value'" [optionLabel]="'label'" (ngModelChange)="loadDashboardData()" [options]="[{value: 1, label: 'Mese scorso'}, {value: 3, label: 'Ultimi 3 mesi'}, {value:6, label: 'Ultimi 6 mesi'}, {value: 12, label: 'Ultimo anno'}]" [(ngModel)]="selectRollingMonths" placeholder="Rolling Mesi" class="form-control"> </p-select>
+            </div>
+          </div>
           <ng-template pTemplate="title">Saldo mensile</ng-template>
           <ng-template pTemplate="content">
             <p-chart type="line" [data]="chartSaldoMensile"></p-chart>
@@ -18,7 +36,7 @@
         </p-card>
       </div>
     </div>
-  
+      
     <!-- Seconda Riga: Grafici di Distribuzione -->
     <div class="row">
       <div class="col-md-6 mb-4">

@@ -8,11 +8,14 @@ import { PrimaNotaService } from '../../services/prima-nota.service';
 import { ComponentLoaderService } from '../../services/loader.service';
 import { ChartModule } from 'primeng/chart';
 import { Card } from 'primeng/card';
+import { DatePicker } from 'primeng/datepicker';
+import { FormsModule } from '@angular/forms';
+import { Select } from 'primeng/select';
 
 @Component({
   selector: 'app-prima-nota',
   templateUrl: './contabilita.component.html',
-  imports: [CrudTableComponent, ChartModule, Card]
+  imports: [CrudTableComponent, ChartModule, Card, DatePicker, FormsModule, Select]
 })
 export class PrimaNotaComponent {
 
@@ -23,6 +26,10 @@ export class PrimaNotaComponent {
   public chartDistribuzioneUscite: any;
   public chartProdottiPiuCostosi: any
   public chartRapportoEntrateUscite: any
+  public selectedDataInizio: Date
+  public selectedDataFine: Date
+  public selectedRollingDays: number
+  public selectRollingMonths: number
 
   public config: CrudTableConfig = {
     title: 'Prima Nota',
@@ -101,9 +108,9 @@ export class PrimaNotaComponent {
     this.loadDashboardData();
   }
 
-  private loadDashboardData() {
+  public loadDashboardData() {
     // Entrate vs Uscite
-    this._primaNotaService.getTotaleEntrateUscite()
+    this._primaNotaService.getTotaleEntrateUscite(this.selectedDataInizio, this.selectedDataFine, this.selectedRollingDays)
       .subscribe((data) => {
         this.chartEntrateUscite = {
           labels: ['Entrate', 'Uscite'],
@@ -115,7 +122,7 @@ export class PrimaNotaComponent {
       });
 
     // Saldo Mensile
-    this._primaNotaService.getSaldoMensile()
+    this._primaNotaService.getSaldoMensile(this.selectRollingMonths)
       .subscribe((data) => {
         this.chartSaldoMensile = {
           labels: data.map((m: any) => m.mese),

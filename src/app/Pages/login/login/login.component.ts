@@ -8,13 +8,15 @@ import { AuthService } from '../../../services/auth.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { environment } from '../../../../environment/environment';
 import  packageJson  from '../../../../../package.json'
+import { ToastModule } from 'primeng/toast';
+import { LoaderComponent } from '../../../components/loader/loader.component';
 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [ReactiveFormsModule, CommonModule, InputTextModule, PasswordModule, ButtonModule, RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, InputTextModule, PasswordModule, ButtonModule, RouterModule, ToastModule, LoaderComponent],
   standalone: true
 })
 export class LoginComponent {

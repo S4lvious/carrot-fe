@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PrimaNota } from '../models/primanota.model';
 import { environment } from '../../environment/environment';
@@ -44,10 +44,26 @@ export class PrimaNotaService {
   }
 
   // Recupera il totale delle entrate e delle uscite per i grafici
-  getTotaleEntrateUscite(): Observable<{ entrate: number, uscite: number }> {
-    return this.http.get<{ entrate: number, uscite: number }>(`${this.apiUrl}/dashboard/totali`);
+  getTotaleEntrateUscite(
+    dataInizio?: Date,
+    dataFine?: Date,
+    rollingDays?: number
+  ): Observable<{ entrate: number; uscite: number }> {
+    let params = new HttpParams();
+    
+    if (dataInizio) {
+      // Converte la data in formato ISO (YYYY-MM-DD)
+      params = params.set('dataInizio', dataInizio.toISOString().split('T')[0]);
+    }
+    if (dataFine) {
+      params = params.set('dataFine', dataFine.toISOString().split('T')[0]);
+    }
+    if (rollingDays !== undefined && rollingDays !== null) {
+      params = params.set('rollingDays', rollingDays.toString());
+    }
+    
+    return this.http.get<{ entrate: number; uscite: number }>(`${this.apiUrl}/dashboard/totali`, { params });
   }
-
   // Recupera il saldo mensile per i grafici
   getSaldoMensile(mesi: number = 6): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/dashboard/saldo?mesi=${mesi}`);

@@ -6,8 +6,9 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { Toast } from 'primeng/toast';
+import { Toast, ToastModule } from 'primeng/toast';
 import { AuthService } from '../../services/auth.service';
+import { LoaderComponent } from '../../components/loader/loader.component';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./register.component.css'],
   providers: [MessageService],
   standalone: true,
-  imports: [CardModule, ButtonModule, InputTextModule, FormsModule, CommonModule, MessageModule, Toast]
+  imports: [CardModule, ButtonModule, InputTextModule, FormsModule, CommonModule, MessageModule, ToastModule, LoaderComponent]
 })
 
 export class RegisterComponent {

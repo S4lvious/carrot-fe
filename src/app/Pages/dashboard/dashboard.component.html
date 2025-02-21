@@ -84,7 +84,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-cliente>
                 <tr>
-                  <ng-container *ngIf="cliente.azienda === true; else defaultValue">
+                  <ng-container *ngIf="cliente.isAzienda === true; else defaultValue">
                     <td>
                       {{cliente.ragioneSociale}}
                     </td>
