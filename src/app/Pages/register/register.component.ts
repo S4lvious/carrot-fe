@@ -50,6 +50,11 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.userData.email && this.userData.password) {
+      Object.keys(this.userData).forEach(key => {
+        if (this.userData[key] === '') {
+          this.userData[key] = null;
+        }
+      });
       this.authService.sendRegister(this.userData).subscribe((data) => {
         this.messageService.add({ severity: 'success', summary: 'Successo', detail: data });
         
