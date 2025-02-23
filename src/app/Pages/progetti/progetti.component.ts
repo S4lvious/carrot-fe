@@ -17,6 +17,8 @@ import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from 
 import { Select } from 'primeng/select';
 import { DatePicker } from 'primeng/datepicker';
 import { Badge } from 'primeng/badge'
+import { ChipModule } from 'primeng/chip';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-project-board',
@@ -34,7 +36,9 @@ import { Badge } from 'primeng/badge'
     Menu,
     Select,
     DatePicker,
-    Badge
+    Badge,
+    ChipModule,
+    TooltipModule
     ],
   providers: [MessageService],
   templateUrl: './progetti.component.html',
