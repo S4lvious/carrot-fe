@@ -25,6 +25,8 @@ export class ProjectService {
   }
 
   editProject(project: Progetto): Observable<Progetto> {
+    delete project.positionX;
+    delete project.positionY;
     return this.http.put<Progetto>(this.apiUrl, project, {headers: {'X-Skip-Loader': 'true'}})
   }
 }

@@ -92,7 +92,7 @@ export class ProjectBoardComponent implements OnInit {
       },
       {
         label: 'Modifica Progetto',
-        icon: 'pi pi-edit',
+        icon: 'pi pi-pencil',
         command: () => this.editProject(project)
       }
     ];
