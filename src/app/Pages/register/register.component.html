@@ -1,100 +1,193 @@
-<div class="container-fluid p-0">
-    <!-- Hero Section -->
-    <div class="hero-section text-white text-center d-flex align-items-center justify-content-center">
-        <div class="container">
-            <h1 class="display-4 fw-bold">Gestisci la tua attività in modo semplice</h1>
-            <p class="lead">La soluzione completa per la gestione aziendale</p>
-            <p-button label="Inizia Ora" class="mt-3" severity="primary"></p-button>
-        </div>
+<div class="landing-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-overlay">
+      <div class="container text-center">
+        <h1 class="hero-title">Gestisci la tua attività in modo semplice</h1>
+        <p class="hero-subtitle">La soluzione completa per la gestione aziendale</p>
+        <p-button label="Inizia Ora" href="#form"  class="mt-4" severity="primary"></p-button>
+      </div>
     </div>
+  </section>
 
-    <!-- Features Section -->
-    <div class="container my-5">
-        <div class="row text-center">
-            <div class="col-md-4" *ngFor="let feature of ['Semplice', 'Potente', 'Sicuro']">
-                <p-card>
-                    <ng-template pTemplate="title">{{ feature }}</ng-template>
-                    <ng-template pTemplate="content">
-                        <p>{{ feature === 'Semplice' ? 'Interfaccia intuitiva per gestire ordini, fatture e clienti.' : 
-                              feature === 'Potente' ? 'Strumenti avanzati per monitorare il tuo business in tempo reale.' : 
-                              'Protezione dei dati con crittografia di livello aziendale.' }}</p>
-                    </ng-template>
-                </p-card>
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4" *ngFor="let feature of ['Semplice', 'Potente', 'Sicuro']">
+          <p-card class="feature-card">
+            <ng-template pTemplate="title">
+              <!-- Puoi inserire un'icona qui se desideri -->
+              <h4>{{ feature }}</h4>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <p>
+                {{
+                  feature === 'Semplice'
+                    ? 'Interfaccia intuitiva per gestire ordini, fatture e clienti.'
+                    : feature === 'Potente'
+                    ? 'Strumenti avanzati per monitorare il tuo business in tempo reale.'
+                    : 'Protezione dei dati con crittografia di livello aziendale.'
+                }}
+              </p>
+            </ng-template>
+          </p-card>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing & Registration Form Section -->
+  <section class="pricing-registration">
+    <div class="container">
+      <div class="row">
+        <!-- Pricing Plans -->
+        <div class="col-md-6 mb-4">
+          <h3 class="text-center mb-4">Scegli il tuo piano</h3>
+          <div class="row">
+            <div class="col-md-6 mb-3" *ngFor="let plan of plans">
+              <p-card class="pricing-card text-center" [class.selected]="userData.plan === plan.value">
+                <ng-template pTemplate="title">
+                  <h5>{{ plan.name }}</h5>
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <h6 class="price">{{ plan.price }}</h6>
+                  <p>{{ plan.description }}</p>
+                  <p-button
+                    [severity]="userData.plan === plan.value ? 'danger' : 'warn'"
+                    (click)="userData.plan = plan.value">
+                    {{ userData.plan === plan.value ? 'Selezionato' : 'Seleziona' }}
+                  </p-button>
+                </ng-template>
+              </p-card>
             </div>
+          </div>
         </div>
-    </div>
-
-    <!-- Pricing & Registration Form Section -->
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <!-- Pricing Plans -->
-            <div class="col-md-6">
-                <h3 class="text-center mt-3">Scegli il tuo piano</h3>
+        
+        <!-- Registration Form -->
+        <div class="col-md-6 mb-4">
+          <p-card class="form-card">
+            <ng-template pTemplate="title">
+              <h3>Provalo gratis!</h3>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <form (ngSubmit)="onSubmit()">
+                <!-- Dati personali -->
                 <div class="row">
-                    <div class="col-md-6 mb-3" *ngFor="let plan of plans">
-                        <p-card class="pricing-card text-center" [class.selected]="userData.plan === plan.value">
-                            <ng-template pTemplate="title">
-                                <h5>{{ plan.name }}</h5>
-                            </ng-template>
-                            <ng-template pTemplate="content">
-                                <h6 class="price">{{ plan.price }}</h6>
-                                <p>{{ plan.description }}</p>
-                                <p-button 
-                                    [severity]="userData.plan === plan.value ? 'danger' : 'warn'"
-                                    (click)="userData.plan = plan.value">
-                                    {{ userData.plan === plan.value ? 'Selezionato' : 'Seleziona' }}
-                                </p-button>
-                            </ng-template>
-                        </p-card>
+                  <div class="col-md-6">
+                    <h5>Dati personali</h5>
+                    <div class="form-group" *ngFor="let field of ['email','password','nome','cognome']">
+                      <label for="{{ field }}">{{ field | titlecase }}</label>
+                      <input
+                        [type]="field === 'password' ? 'password' : 'text'"
+                        class="form-control"
+                        [(ngModel)]="userData[field]"
+                        name="{{ field }}"
+                        id="{{ field }}">
                     </div>
+                  </div>
                 </div>
-            </div>
-            
-            <!-- Registration Form -->
-            <div class="col-md-6">
-                <p-card class="form-card">
-                    <ng-template pTemplate="title">
-                        <h3>Provalo gratis!</h3>
-                    </ng-template>
-                    <ng-template pTemplate="content">
-                        <form (ngSubmit)="onSubmit()">
-                            <!-- Dati personali -->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5>Dati personali</h5>
-                                    <div class="form-group" *ngFor="let field of ['email','password', 'nome', 'cognome']">
-                                        <label>{{ field | titlecase }}</label>
-                                        <input [type]="field === 'password' ? 'password' : 'text'" class="form-control" [(ngModel)]="userData[field]" name="{{ field }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <app-loader></app-loader>
-                            <p-toast [position]="'bottom-right'"></p-toast>
-                            <div class="text-center mt-4">
-                                <p-button type="submit">Registrati</p-button>
-                            </div>
-                        </form>
-                    </ng-template>
-                </p-card>
-            </div>
+                <app-loader></app-loader>
+                <p-toast [position]="'bottom-right'"></p-toast>
+                <div class="text-center mt-4">
+                  <p-button type="submit" label="Registrati"></p-button>
+                </div>
+                <p class="forgot-password">
+                    <a href="/login">Accedi</a>
+                </p>
+        
+              </form>
+            </ng-template>
+          </p-card>
         </div>
+      </div>
     </div>
+  </section>
 </div>
 
 <style>
+  /* Struttura e tipografia generale */
+  .landing-container {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #333;
+  }
+
+  /* Hero Section con immagine di sfondo e overlay */
+  .hero-section {
+    position: relative;
+    background: url('https://images.unsplash.com/photo-1556740772-1a741367b93e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+    height: 100vh;
+  }
+
+  .forgot-password {
+  margin-top: 10px;
+  font-size: 12px;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(44, 62, 80, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+  }
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Sezione Features */
+  .features-section {
+    background-color: #f8f9fa;
+    padding: 60px 0;
+  }
+  .feature-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Sezione Pricing e Registrazione */
+  .pricing-registration {
+    padding: 60px 0;
+  }
+  .pricing-card {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .pricing-card.selected {
+    border-color: #e74c3c;
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.5);
+  }
+  .form-card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
     .hero-section {
-        background: linear-gradient(135deg, #2c3e50, #3498db);
-        height: 400px;
+      height: 70vh;
     }
-    .pricing-card {
-        border: 2px solid #ccc;
-        padding: 20px;
-        border-radius: 8px;
-    }
-    .pricing-card.selected {
-        border-color: #e74c3c;
-    }
-    .form-card {
-        padding: 20px;
-    }
+  }
 </style>
