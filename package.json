@@ -1,6 +1,6 @@
 {
   "name": "carrot-fe",
-  "version": "0.2.17",
+  "version": "0.3.17",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -22,6 +22,7 @@
     "@primeng/themes": "^19.0.6",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.7",
+    "jwt-decode": "^4.0.0",
     "ngx-bootstrap": "^19.0.2",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.6",

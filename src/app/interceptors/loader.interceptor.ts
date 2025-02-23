@@ -1,14 +1,23 @@
-// src/app/interceptors/loader.interceptor.ts
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { finalize } from 'rxjs/operators';
 import { LoaderService } from '../services/loader-component.service';
+import { finalize } from 'rxjs';
 
 export const loaderInterceptor: HttpInterceptorFn = (req, next) => {
   const loaderService = inject(LoaderService);
-  loaderService.show();
+
+  // Verifica se esiste un header "X-Skip-Loader"
+  const skipLoader = req.headers.has('X-Skip-Loader');
+
+  if (!skipLoader) {
+    loaderService.show();
+  }
 
   return next(req).pipe(
-    finalize(() => loaderService.hide())
+    finalize(() => {
+      if (!skipLoader) {
+        loaderService.hide();
+      }
+    })
   );
 };

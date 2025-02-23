@@ -1,0 +1,145 @@
+<!-- Menu per i task -->
+<p-menu #taskMenu [popup]="true" [model]="taskMenuItems" appendTo="body"></p-menu>
+<p-menu #menu [popup]="true" [model]="menuItems" appendTo="body"></p-menu>
+<!-- Dialog per la modifica del progetto -->
+<p-dialog header="Modifica Progetto" [(visible)]="displayEditProjectDialog" [modal]="true" [closable]="true" [style]="{width: '600px'}">
+  <div class="container">
+    <!-- Nome del progetto -->
+    <div class="mb-3">
+      <label for="toEditProjectName" class="form-label fw-bold">Nome del Progetto</label>
+      <input id="toEditProjectName" type="text" class="form-control" pInputText [(ngModel)]="toEditProject.nome" required />
+    </div>
+
+    <!-- Descrizione -->
+    <div class="mb-3">
+      <label for="toEditProjectDescription" class="form-label fw-bold">Descrizione</label>
+      <textarea id="toEditProjectDescription" class="form-control" pInputTextarea [(ngModel)]="toEditProject.descrizione" rows="3"></textarea>
+    </div>
+    <!-- Data di Creazione -->
+
+  </div>
+
+  <!-- Footer con pulsanti Salva e Annulla -->
+  <ng-template #footer>
+      <p-button (click)="updateProject()">
+        <i class="pi pi-check"></i> Salva
+      </p-button>
+      <p-button [severity]="'secondary'" (click)="closetoEditProject()">
+        <i class="pi pi-times"></i> Annulla
+      </p-button>
+  </ng-template>
+</p-dialog>
+
+<!-- Dialog per la modifica del task -->
+<p-dialog header="Modifica Task" [(visible)]="displayEditTaskDialog" [modal]="true" [closable]="true" [style]="{width: '600px'}">
+  <div class="container">
+    <!-- Titolo -->
+    <div class="mb-3">
+      <label for="editTaskName" class="form-label fw-bold">Titolo</label>
+      <input id="editTaskName" type="text" class="form-control" pInputText [(ngModel)]="editTask.titolo" required />
+    </div>
+
+    <!-- Descrizione -->
+    <div class="mb-3">
+      <label for="editTaskDescription" class="form-label fw-bold">Descrizione</label>
+      <textarea id="editTaskDescription" class="form-control" pInputTextarea [(ngModel)]="editTask.descrizione" rows="3"></textarea>
+    </div>
+
+    <!-- Stato -->
+    <div class="mb-3">
+      <label for="editTaskStatus" class="form-label fw-bold">Stato</label>
+      <p-select id="editTaskStatus" class="form-control" [options]="taskStatusOptions" [(ngModel)]="editTask.stato"></p-select>
+    </div>
+
+
+    <!-- Data Scadenza -->
+    <div class="mb-3">
+      <label for="editTaskDueDate" class="form-label fw-bold">Data Scadenza</label>
+      <p-date-picker appendTo="body" id="editTaskDueDate" class="form-control" hourFormat="24" [(ngModel)]="editTask.dataScadenza"  [showTime]="true" showIcon></p-date-picker>
+    </div>
+  </div>
+
+  <ng-template #footer>
+      <p-button (click)="updateTask()">
+        <i class="pi pi-check"></i> Salva
+      </p-button>
+      <p-button [severity]="'secondary'" (click)="closeEditTaskDialog()">
+        <i class="pi pi-times"></i> Annulla
+      </p-button>
+  </ng-template>
+</p-dialog>
+
+<div class="container-xs m-3">
+  <div class="d-flex justify-content-between align-items-center m-3">
+    <h2>Spazio di lavoro</h2>
+  </div>
+
+  <div class="workspace">
+    <div *ngFor="let project of projects"
+         cdkDrag
+         [cdkDragBoundary]="'.workspace'"
+         [cdkDragFreeDragPosition]="{x: project.positionX!, y: project.positionY!}"
+         (cdkDragStarted)="onDragStartProject(project)"
+         (cdkDragEnded)="onProjectMoved($event, project)"
+         class="project-board">
+
+      <p-panel styleClass="project-panel">
+        <ng-template pTemplate="header">
+          <div class="d-flex justify-content-between align-items-center">
+            <span>{{ project.nome }}</span>
+            <button type="button" pButton icon="pi pi-ellipsis-v"
+                    class="p-button-text p-button-rounded"
+                    (click)="onProjectMenuClick($event, project)">
+            </button>
+          </div>
+        </ng-template>
+                                
+        <div cdkDropList 
+             [id]="'taskList-' + project.id"
+             [cdkDropListData]="project.tasks ?? []"
+             [cdkDropListConnectedTo]="projectDropListIds"
+             (cdkDropListDropped)="moveTask($event, project)"
+             class="task-list">
+          
+             <div *ngFor="let task of project.tasks"
+             cdkDrag
+             [cdkDragData]="task"
+             class="task-card">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <p class="mb-0 me-2">{{ task.titolo }}</p>
+              <p-badge [value]="task.stato" [severity]="getBadgeSeverity(task.stato)"></p-badge>
+            </div>
+            <!-- Pulsante menu per il task -->
+            <button type="button" pButton icon="pi pi-ellipsis-v"
+                    class="p-button-text p-button-rounded task-menu-btn"
+                    (click)="onTaskMenuClick($event, task, project)">
+            </button>
+          </div>
+        </div>
+        
+        
+        </div>
+
+        <div *ngIf="addingTaskProjectId === project.id; else addTaskButton" class="add-task-inline mt-2 gap">
+          <input type="text" pInputText [(ngModel)]="newTaskName" placeholder="Titolo del task" />
+          <button type="button" pButton icon="pi pi-check"class="mt-2 m-1" (click)="addTask(project.id)"></button>
+          <button type="button" pButton icon="pi pi-times" class="mt-2 p-button-secondary" (click)="cancelAddTask()"></button>
+        </div>
+        <ng-template #addTaskButton>
+          <button type="button" pButton label="Aggiungi Task" class="p-button-text mt-3" icon="pi pi-plus" (click)="startAddTask(project)"></button>
+        </ng-template>
+
+      </p-panel>
+    </div>
+
+    <div class="project-board new-project-card" (click)="startNewProject()">
+      <p-panel [header]="'Aggiungi Nuovo Progetto'" styleClass="new-project-panel">
+        <div class="p-card-content">
+          <input id="newProjectName" pInputText [(ngModel)]="newProjectName" placeholder="Inserisci nome progetto" />
+          <button type="button" pButton label="Aggiungi Progetto" class="mt-3 p-button-text" icon="pi pi-plus" (click)="addProject()"></button>
+        </div>
+      </p-panel>
+    </div>
+  </div>
+</div>

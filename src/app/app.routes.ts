@@ -15,6 +15,7 @@ import { EditUserComponent } from './Pages/user/user.component';
 import { CategorieMovimentoComponent } from './Pages/categorie-movimento/categorie-movimento.component';
 import { profileGuard } from './guards/profile.guard';
 import { ArchivioDocumentiComponent } from './Pages/documenti/archivio-documenti.component';
+import { ProjectBoardComponent } from './Pages/progetti/progetti.component';
 
 export const routes: Routes = [
   {
@@ -31,7 +32,8 @@ export const routes: Routes = [
       { path: 'fatture', component: FattureComponent, canActivate: [authGuard,profileGuard] },
       { path: 'contabilita', component: PrimaNotaComponent, canActivate: [authGuard,profileGuard]},
       { path: 'utente', component: EditUserComponent, canActivate:[authGuard]},
-      { path: 'documenti', component: ArchivioDocumentiComponent, canActivate:[authGuard]}
+      { path: 'documenti', component: ArchivioDocumentiComponent, canActivate:[authGuard]},
+      { path: 'progetti', component: ProjectBoardComponent, canActivate:[authGuard]}
 
 
     ]

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environment/environment';
 import { map, Observable } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -38,9 +39,31 @@ export class AuthService {
       registerForm.role = "USER";
       return this._http.post(this.apiurl + '/register', registerForm, { responseType: 'text', params: params },);
     }
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem('token'); // Verifica se il token esiste
-  }
+    isAuthenticated(): boolean {
+      const token = localStorage.getItem('token');
+  
+      if (!token) {
+        return false;
+      }
+  
+      if (this.isTokenExpired(token)) {
+        this.logout(); // 🔥 Se il token è scaduto, lo eliminiamo e buttiamo fuori l'utente
+        return false;
+      }
+  
+      return true;
+    }
+  
+    private isTokenExpired(token: string): boolean {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        const currentTime = Math.floor(Date.now() / 1000); // Confronto con il tempo attuale in secondi
+        return decodedToken.exp < currentTime; // Se il token è scaduto, ritorna true
+      } catch (error) {
+        return true; // Se c'è un errore nel decoding, consideriamo il token non valido
+      }
+    }
+  
 
   public apiUrl : string = 'https://api.powerwebsoftware.it/api/user/profile-status';
   isProfileCompleted(): Observable<boolean> {
